@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+    upendo_php:
+        user: ikimea
+        build:
+            context: .
+            dockerfile: docker/app/Dockerfile
+            args:
+                GID: 3000
+                UID: 3000
+        depends_on:
+            - upendo_database
+        env_file: ./docker/app/.env.ci
+        volumes:
+            - ~/.composer:/home/ikimea/.composer
+            - .:/opt/project
+
+    upendo_database:
+        image: postgres:9.6
+        env_file: ./docker/app/.env.ci
+        environment:
+            - POSTGRES_USER=upendo
+            - POSTGRES_PASSWORD=azerty123
+            - POSTGRES_DB=upendo
+        labels:
+            - "traefik.enable=false"
+
+    upendo_rabbitmq:
+        image: rabbitmq:3.6-management
+
+    upendo_redis:
+        image: redis:3.0
