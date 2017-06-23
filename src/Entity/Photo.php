@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Entity;
+namespace Upendo\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
+ * @ApiResource
  * @ORM\Entity
  * @ORM\Table(name="photo")
  */
@@ -17,18 +18,21 @@ class Photo
      * @var string
      * @ORM\Id
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $path;
 
     /**
      * @var User
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="photos", cascade={all})
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="photos", cascade={"all"})
+     * @ApiProperty
      */
     protected $user;
 
@@ -43,14 +47,6 @@ class Photo
     public function getId(): string
     {
         return $this->id;
-    }
-
-    /**
-     * @param string $id
-     */
-    public function setId(string $id)
-    {
-        $this->id = $id;
     }
 
     /**

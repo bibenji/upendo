@@ -1,13 +1,16 @@
 <?php
 
-namespace App\Entity;
+namespace Upendo\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
+ * @ApiResource
  * @ORM\Entity()
  * @ORM\Table(name="member")
  */
@@ -17,48 +20,56 @@ class User
      * @var string
      * @ORM\Id
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $username;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $email;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $gender;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $phone;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $firstname;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $lastname;
 
     /**
      * @var
      * @ORM\Column(type="string")
+     * @ApiProperty
      */
     protected $description;
 

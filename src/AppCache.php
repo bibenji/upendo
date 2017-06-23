@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Upendo;
 
 use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
 

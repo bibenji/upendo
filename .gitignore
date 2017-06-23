@@ -1,5 +1,8 @@
 /build/
 /phpunit.xml
+
+/bin/*
+!/bin/console
 /var/*
 !/var/cache
 /var/cache/*
@@ -7,10 +10,9 @@
 !/var/logs
 /var/logs/*
 !var/logs/.gitkeep
-!/var/sessions
-/var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
 /mobile/node_modules
+.env

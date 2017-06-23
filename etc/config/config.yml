@@ -4,7 +4,7 @@ imports:
 
 parameters:
     locale: en
-    secret: %env(SECRET)%
+    secret: "%env(SECRET)%"
 
 framework:
     #esi:             ~
@@ -48,14 +48,20 @@ doctrine:
         server_version: 9.6
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        mapping:
-            App:
-                type: annotation
-                dir: '%kernel.root_dir%/../src/Entity'
-                prefix: App\Entity
-                alias: App
+        entity_managers:
+            default:
+                auto_mapping: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    App:
+                        type: annotation
+                        dir: '%kernel.root_dir%/../src/Entity'
+                        prefix: Upendo\Entity
+                        alias: Upendo
+
+doctrine_migrations:
+    dir_name: '%kernel.root_dir%/../etc/DoctrineMigrations'
+
 
 # Swiftmailer Configuration
 #swiftmailer:
@@ -113,5 +119,4 @@ swarrot:
 doctrine_migrations:
     dir_name: "%%"
 
-graphql:
-    schema_class: "App\\GraphQL\\Schema"
+api_platform: ~

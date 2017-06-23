@@ -1,11 +1,11 @@
 <?php
 
-namespace AppBundle\DataFixtures\ORM;
+namespace Upendo\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use App\Entity\User;
+use Upendo\Entity\User;
 
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {

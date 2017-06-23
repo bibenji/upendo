@@ -5,17 +5,7 @@ use Symfony\Component\HttpFoundation\Request;
 /*
  * @var Composer\Autoload\ClassLoader
  */
-$loader = require __DIR__.'/../etc/autoload.php';
-
-// Enable APC for autoloading to improve performance.
-// You should change the ApcClassLoader first argument to a unique prefix
-// in order to prevent cache key conflicts with other applications
-// also using APC.
-/*
-$apcLoader = new Symfony\Component\ClassLoader\ApcClassLoader(sha1(__FILE__), $loader);
-$loader->unregister();
-$apcLoader->register(true);
-*/
+$loader = require __DIR__.'/../vendor/autoload.php';
 
 $env = getenv('SYMFONY_ENV');
 $debug = 'dev' === $env;
