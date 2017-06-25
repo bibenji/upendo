@@ -120,3 +120,27 @@ doctrine_migrations:
     dir_name: "%%"
 
 api_platform: ~
+
+# Nelmio CORS
+nelmio_cors:
+    defaults:
+        # allow_origin:   ["%cors_allow_origin%"]
+        # allow_origin:   ["*"]
+        origin_regex: true
+        allow_origin: ['^http://localhost:[0-9]+']
+        allow_methods:  ["POST", "PUT", "GET", "DELETE", "OPTIONS"]
+        allow_headers:  ["content-type", "authorization"]
+        expose_headers: ["link"]
+        max_age:        3600
+    paths:
+        '^/': ~
+
+bazinga_faker:
+    orm: doctrine
+    locale: fr
+
+    entities:
+        AppBundle\Entity\User:
+            number: 10
+        # AppBundle\Entity\Profile:
+            # number: 10

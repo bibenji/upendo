@@ -1,15 +1,16 @@
 <?php
 
-namespace Upendo\Entity;
+namespace AppBundle\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
- * @ApiResource
- * @ORM\Entity
+ * @ApiResource(iri="http://schema.org/Photo")
+ * @ORM\Entity()
  * @ORM\Table(name="photo")
  */
 class Photo
@@ -18,21 +19,18 @@ class Photo
      * @var string
      * @ORM\Id
      * @ORM\Column(type="string")
-     * @ApiProperty
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @ApiProperty
      */
     protected $path;
 
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="User", inversedBy="photos", cascade={"all"})
-     * @ApiProperty
      */
     protected $user;
 
@@ -44,15 +42,23 @@ class Photo
     /**
      * @return string
      */
-    public function getId(): string
+    public function getId()
     {
         return $this->id;
     }
 
     /**
+     * @param string $id
+     */
+    public function setId(string $id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return string
      */
-    public function getPath(): string
+    public function getPath()
     {
         return $this->path;
     }
@@ -68,7 +74,7 @@ class Photo
     /**
      * @return User
      */
-    public function getUser(): User
+    public function getUser()
     {
         return $this->user;
     }
