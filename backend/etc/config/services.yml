@@ -1,0 +1,19 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    app.security.user_provider:
+#        class: Security\UserProvider
+#        arguments: [ '@doctrine.orm.entity_manager' ]
+#    app.security.api_key_authenticator:
+#        class: Security\ApiKeyAuthenticator
+#    app.security.success_handler:
+#        class: Security\SuccessHandler
+#        arguments: [ '@doctrine.orm.entity_manager' ]
+#    app.listener.password_encoder:
+#        class: EventListener\PasswordEncoder
+#        arguments: [ '@security.password_encoder' ]
+#        tags:
+#            - { name: doctrine.event_listener, event: prePersist }

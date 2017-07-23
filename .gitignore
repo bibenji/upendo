@@ -16,3 +16,11 @@
 /web/bundles/
 /mobile/node_modules
 .env
+
+/client-gestionly/
+/client-orpheon/
+/client-web/node_modules
+/backend/var
+/backend/vendor
+/my-backend/var
+/my-backend/vendor

@@ -14,7 +14,7 @@ import CustomAxios from '../../tools/connectivity/api';
 import Homepage from '../homepage/homepage';
 import Login from '../login/login';
 import Affinities from '../affinities/affinities';
-import MyProfile from '../my-profile/MyProfile';
+// import MyProfile from '../my-profile/MyProfile';
 import Register from '../register/register';
 import Settings from '../settings/settings';
 import ProfilesContainer from '../profiles/profilesContainer';
@@ -171,7 +171,7 @@ class MainRouter extends Reflux.Component {
 						<PropsRoute path='/' component={Homepage} axiosParams={this.getCustomAxiosParams()} exactPath={true} />
 						<Route exact path="/login" component={Login}/>
 						<Route exact path="/affinities" component={Affinities}/>
-						<Route path="/my-profile" component={MyProfile}/>
+						{/*<Route path="/my-profile" component={MyProfile}/>*/}
 						<Route exact path="/register" component={Register}/>
 						{/*<Route exact path="/profiles" component={Profiles}/>*/}
 						<PropsRoute path='/profiles' component={ProfilesContainer} axiosParams={this.getCustomAxiosParams()} />

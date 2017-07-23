@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 let CustomAxios = axios.create({  
-  baseURL: 'http://localhost/mynewupendo/web/app_dev.php',
+  baseURL: 'http://api.upendo.localhost',
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
 });

@@ -1,19 +1,70 @@
-version: '2'
+version: '3'
 
 services:
+    upendo_client:
+        env_file: .env
+        build:
+            context: ./docker/client-web/
+#            dockerfile: docker/client-web/Dockerfile
+##        image: node:latest
+        volumes:
+            - ./client-web/:/app/
+        ports:
+            - 4001:4001
+        command: npm run start
+#        command: webpack-dev-server --hot --inline --progress --content-base public
+##        command: webpack-dev-server --hot --inline --progress --host 0.0.0.0 --content-base public
+#        command: webpack-dev-server --hot --inline --progress --public 0.0.0.0:4000 --content-base public
+        labels:
+            - "traefik.backend=upendo_client"
+            - "traefik.frontend.rule=Host:${SITE_HOST}"
+            - "traefik.port=4001"
+            - "traefik.frontend.passHostHeader=true"
+
+#     orpheon_client:
+#            image: jmfirth/webpack
+#            command: webpack-dev-server --hot --inline --progress --host 0.0.0.0 --content-base public
+#            command: webpack-dev-server --hot --inline --progress --content-base public
+#            volumes:
+#                - ./client-orpheon/:/app/
+#            ports:
+#                - 4001:4001
+#            expose:
+#                - 4001
+#            env_file: .env
+#            labels:
+#                - "traefik.backend=orpheon_client"
+#                - "traefik.frontend.rule=Host:${SITE_HOST}"
+#                - "traefik.port=4001"
+#                - "traefik.frontend.passHostHeader=true"
+
+#    orpheon_client:
+#            image: jmfirth/webpack
+#            env_file: .env
+#            volumes:
+#                - ./client-orpheon/:/app
+#            command: webpack-dev-server --hot --inline --progress --host 0.0.0.0 --content-base public
+#            ports:
+#                - 4000:4000
+#            labels:
+#                - "traefik.backend=orpheon_front"
+#                - "traefik.frontend.rule=Host:${SITE_HOST}"
+#                - "traefik.port=4000"
+#                - "traefik.frontend.passHostHeader=true"
+
     upendo_nginx:
         user: ikimea
         image: ikimea/nginx
         labels:
-           - "traefik.backend=upendo"
+           - "traefik.backend=api.upendo"
            - "traefik.frontend.rule=Host:api.${SITE_HOST}"
            - "traefik.port=80"
            - "traefik.frontend.passHostHeader=true"
            - "traefik.backend.loadbalancer.method=drr"
-        volumes_from:
+        depends_on:
            - upendo_php
         volumes:
-           - ./:/opt/project
+           - ./my-backend/:/opt/project/
            - ./docker/nginx/config/nginx.conf:/etc/nginx/conf.d/default.conf
            - ./var/logs/nginx/:/var/log/nginx
         environment:
@@ -22,8 +73,8 @@ services:
     upendo_php:
         user: ikimea
         build:
-            context: .
-            dockerfile: docker/app/Dockerfile
+            context: ./docker/php/
+#            dockerfile: docker/app/Dockerfile
             args:
                 GID: ${GID}
                 UID: ${UID}
@@ -32,7 +83,7 @@ services:
         depends_on:
             - upendo_database
         volumes:
-            - ./:/opt/project
+            - ./my-backend/:/opt/project/
         labels:
             - "traefik.enable=false"
 

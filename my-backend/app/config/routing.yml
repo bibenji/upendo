@@ -1,0 +1,23 @@
+api:
+    resource: '.'
+    type:     'api_platform'
+
+# app:
+    # resource: '@AppBundle/Action/'
+    # type:     'annotation'
+
+api_login:
+    path: /login
+    defaults:
+        _controller: AppBundle:Security:login
+
+test_action:
+    path: /test
+    defaults:
+        _controller: AppBundle:Security:test
+
+file_upload:
+    path: /upload
+    defaults:
+        _controller: AppBundle:File:upload
+    
