@@ -181,6 +181,25 @@ class MainRouter extends Reflux.Component {
 						<Route exact path="/settings" component={Settings}/>
 						<Route path="/topics" component={Topics}/>											
 					</div>
+
+					<footer className="row" style={{backgroundColor: "#7f8c8d", color: "white", marginTop: "25px", paddingTop: "25px", paddingBottom: "25px"}}>
+						<div className="container">
+							<div className="row">
+								<div className="col-md-4 text-md-center">
+									<h3>Footer</h3>
+									<p>Part 1</p>
+								</div>
+								<div className="col-md-4 text-md-center">
+									<h3>Footer</h3>
+									<p>Part 2</p>
+								</div>
+								<div className="col-md-4 text-md-center">
+									<h3>Footer</h3>
+									<p>Part 3</p>
+								</div>
+							</div>
+						</div>
+					</footer>
 				</div>
 			</Router>
 		)

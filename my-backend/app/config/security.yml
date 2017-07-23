@@ -40,6 +40,7 @@ security:
             anonymous: ~
         
     access_control:
+        - { path: ^/test, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
         - { path: ^/*, roles: ROLE_USER }
