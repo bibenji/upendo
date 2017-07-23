@@ -8,7 +8,6 @@ import CustomAxios from '../../tools/connectivity/api';
 
 import ProfileShow from '../profiles/profileShow';
 import ProfileEdit from './profileEdit';
-import UploadPhotos from './uploadPhotos';
 
 export default class MyProfile extends Reflux.Component {
 	constructor(props) {
@@ -68,11 +67,7 @@ export default class MyProfile extends Reflux.Component {
 			<div>
 				
 				{this.props.match.isExact ?
-					<div className="float-right">
-						<Link to='/my-profile/edit'>Edit</Link>
-						&nbsp;&nbsp;&nbsp;
-						<Link to='/my-profile/upload-photos'>Manage Photos</Link>
-					</div>
+					<Link className="float-right" to='/my-profile/edit'>Edit</Link>
 				:
 					<Link className="float-right" to='/my-profile'>Show</Link>
 				}								
@@ -86,17 +81,11 @@ export default class MyProfile extends Reflux.Component {
 								user={this.state.userData}
 							/>				
 						:
-							(this.props.location.pathname === '/my-profile/edit' ?
-								<ProfileEdit
-									user={this.state.userData}
-									updateProfile={this.updateProfile.bind(this)}
-									updateProfileHandler={this.updateProfileHandler.bind(this)}
-								/>									
-							:
-								<UploadPhotos
-									user={this.state.userData}
-								/>
-							)
+							<ProfileEdit
+								user={this.state.userData}
+								updateProfile={this.updateProfile.bind(this)}
+								updateProfileHandler={this.updateProfileHandler.bind(this)}
+							/>									
 						)
 					: null}
 			</div>

@@ -39,7 +39,7 @@ security:
         main:
             anonymous: ~
         
-#    access_control:
-#        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
-#        - { path: ^/*, roles: ROLE_USER }
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
+        - { path: ^/*, roles: ROLE_USER }

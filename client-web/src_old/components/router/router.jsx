@@ -14,11 +14,10 @@ import CustomAxios from '../../tools/connectivity/api';
 import Homepage from '../homepage/homepage';
 import Login from '../login/login';
 import Affinities from '../affinities/affinities';
-import MyProfile from '../my-profile/myProfile';
+// import MyProfile from '../my-profile/MyProfile';
 import Register from '../register/register';
 import Settings from '../settings/settings';
 import ProfilesContainer from '../profiles/profilesContainer';
-import Mailbox from '../messages/mailbox';
 
 const About = () => (
   <div>
@@ -134,7 +133,7 @@ class MainRouter extends Reflux.Component {
 										<Link className="nav-link disabled" to="/events">Events</Link>
 									</li>
 									<li className="nav-item">
-										<Link className={isUserConnected ? "nav-link" : "nav-link disabled"} to="/messages">Messages</Link>
+										<Link className="nav-link disabled" to="/messagerie">Messagerie</Link>
 									</li>									
 									<li className="nav-item">
 										<Link className={isUserConnected ? "nav-link" : "nav-link disabled"} to="/my-profile">My Profile</Link>
@@ -172,9 +171,8 @@ class MainRouter extends Reflux.Component {
 						<PropsRoute path='/' component={Homepage} axiosParams={this.getCustomAxiosParams()} exactPath={true} />
 						<Route exact path="/login" component={Login}/>
 						<Route exact path="/affinities" component={Affinities}/>
-						<Route path="/my-profile" component={MyProfile}/>
+						{/*<Route path="/my-profile" component={MyProfile}/>*/}
 						<Route exact path="/register" component={Register}/>
-						<Route path="/messages" component={Mailbox}/>
 						{/*<Route exact path="/profiles" component={Profiles}/>*/}
 						<PropsRoute path='/profiles' component={ProfilesContainer} axiosParams={this.getCustomAxiosParams()} />
 						<Route exact path="/about" component={About}/>

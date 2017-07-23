@@ -16,7 +16,7 @@ export default class ProfilesContainer extends React.Component {
 	componentDidMount() {		
 		const that = this;
 
-		CustomAxios.get('/users', {params: Object.assign(this.props.axiosParams, {users_filter_by: 'criteria'})})
+		CustomAxios.get('/users', {params: this.props.axiosParams})
 		.then(function(response) {
 			if (response.status === 200) {
 				that.setState({

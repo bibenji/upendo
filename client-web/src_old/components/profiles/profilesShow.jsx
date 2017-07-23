@@ -39,7 +39,7 @@ export default class ProfilesShow extends React.Component {
 			<div>
 				{this.state.user ?
 					<ProfileShow user={this.state.user} />
-				: 'Loading...'}
+				: 'Error'}
 			</div>
 		)
 	}

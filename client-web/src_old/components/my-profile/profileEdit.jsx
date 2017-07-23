@@ -1,6 +1,6 @@
 import React from 'react';
 
-import GenericInput from '../generic/genericInput';
+import GenericInput from './genericInput';
 
 const Styles = {
 	imgContainerStyle: {
@@ -24,39 +24,14 @@ export default class ProfileEdit extends React.Component {
 			<div>
 				{profile ?
 					<div>
-						<div className="row">
-
-							{user.photos.length > 0 ?						
-								<div className="col-md-4">
-									<div className="row">
-										{user.photos.map((photo, index) => {
-											if (index === 0) {
-												return (
-													<div key={index} className="col-md-12">
-														<img src={"http://localhost/mynewupendo"+photo.path} className="img-thumbnail" />											
-													</div>
-												);
-											} else {
-												return (
-													<div key={index} className="col-md-6">
-														<img src={"http://localhost/mynewupendo"+photo.path} className="img-thumbnail" />											
-													</div>
-												);
-											}									
-										})}
-									</div>
-								</div>
-							:					
-								<div className="col-md-4" style={Styles.imgContainerStyle}>
-									<img src="https://unsplash.it/300/300" width="300px" height="300px" style={Styles.imgStyle} />								
-									<img src="https://unsplash.it/150/150" width="150px" height="150px" />
-									<img src="https://unsplash.it/150/150" width="150px" height="150px" />
-									<img src="https://unsplash.it/150/150" width="150px" height="150px" />
-									<img src="https://unsplash.it/150/150" width="150px" height="150px" />
-									<br /><br />
-								</div>
-							}
-
+						<div className="row">							
+							<div className="col-md-4" style={Styles.imgContainerStyle}>								
+								<img src="https://unsplash.it/300/300" width="300px" height="300px" style={Styles.imgStyle} />								
+								<img src="https://unsplash.it/150/150" width="150px" height="150px" />
+								<img src="https://unsplash.it/150/150" width="150px" height="150px" />
+								<img src="https://unsplash.it/150/150" width="150px" height="150px" />
+								<img src="https://unsplash.it/150/150" width="150px" height="150px" />
+							</div>
 							<div className="col-md-8">				
 								<form onSubmit={this.props.updateProfileHandler}>
 									<div className="form-group row">
@@ -119,7 +94,7 @@ export default class ProfileEdit extends React.Component {
 							</div>
 						</div>
 					</div>
-				: 'Loading...'}
+				: 'Error'}
 			</div>
 		)
 	}

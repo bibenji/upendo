@@ -6,7 +6,6 @@
   "scripts": {
     "build": "webpack --config webpack.production.config.js --progress --profile --colors",
     "start": "webpack-dev-server --progress --profile --colors --host 0.0.0.0",
-    "special_start": "webpack-dev-server --progress --profile --colors --host 0.0.0.0 --content-base public",
     "lint": "eslint --ext js --ext jsx src || exit 0",
     "dev": " webpack-dashboard -- webpack-dev-server --progress --profile --colors"
   },
@@ -19,10 +18,13 @@
   "homepage": "https://github.com/alicoding/react-webpack-babel#readme",
   "dependencies": {
     "axios": "^0.16.2",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "node-sass": "^4.3.0",
     "react": "15.4.2",
     "react-dom": "15.4.2",
-    "react-router-dom": "^4.1.1",
+    "react-dropzone": "^3.13.3",
+    "react-router-dom": "^4.1.2",
     "reflux": "^6.4.1",
     "sass-loader": "^6.0.2"
   },
@@ -43,9 +45,9 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "style-loader": "0.13.1",
     "url-loader": "0.5.7",
-    "webpack": "^2.2.1",
+    "webpack": "^2.7.0",
     "webpack-cleanup-plugin": "^0.4.2",
     "webpack-dashboard": "^0.3.0",
-    "webpack-dev-server": "^2.4.1"
+    "webpack-dev-server": "^2.6.1"
   }
 }
