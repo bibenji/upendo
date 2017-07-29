@@ -34,6 +34,22 @@ services:
         environment:
            - NGINX_PHP_FPM=${NGINX_PHP_FPM}
 
+    upendo_assets:
+        user: ikimea
+        image: ikimea/nginx
+        labels:
+           - "traefik.backend=assets.upendo"
+           - "traefik.frontend.rule=Host:assets.${SITE_HOST}"
+           - "traefik.port=80"
+           - "traefik.frontend.passHostHeader=true"
+           - "traefik.backend.loadbalancer.method=drr"
+        volumes:
+           - ./my-backend/:/opt/project/
+           - ./docker/nginx_assets/config/nginx.conf:/etc/nginx/conf.d/default.conf
+           - ./var/logs/nginx_assets/:/var/log/nginx
+        environment:
+           - NGINX_PHP_FPM=${NGINX_PHP_FPM}
+
     upendo_php:
         user: ikimea
         build:

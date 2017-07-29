@@ -147,6 +147,12 @@ class User implements UserInterface
 	 */
 	protected $messagesSent;
 
+    /**
+     * @var Event
+     * @ORM\ManyToMany(targetEntity="Event", inversedBy="participants")
+     */
+    protected $participations;
+
     public function __construct()
     {
         $this->id = Uuid::uuid4()->toString();
@@ -157,6 +163,7 @@ class User implements UserInterface
 		// $this->relations = new ArrayCollection(); 		
 		$this->conversations = new ArrayCollection(); 		
 		$this->messagesSent = new ArrayCollection(); 		
+		$this->participations = new ArrayCollection();
     }
 
     /**
@@ -504,6 +511,30 @@ class User implements UserInterface
     public function setMessagesSent(Collection $messagesSent)
     {
         $this->messagesSent = $messagesSent;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getParticipations()
+    {
+        return $this->participations;
+    }
+
+    /**
+     * @param Collection $participations
+     */
+    public function setParticipations(Collection $participations)
+    {
+        $this->participations = $participations;
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function addParticipation(Event $participation)
+    {
+        $this->participations[] = $participation;
     }
 	
     public function getSalt()

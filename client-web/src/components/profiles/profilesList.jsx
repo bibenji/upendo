@@ -25,7 +25,8 @@ export default class ProfilesList extends React.Component {
 	
 	render() {
 		return (
-			<div>				
+			<div>
+				<Link to="/search" className="btn float-right">Search</Link>
 				<h2>Profiles</h2>
 				
 				<div className="row">				

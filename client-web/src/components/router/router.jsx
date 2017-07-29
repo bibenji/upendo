@@ -19,6 +19,9 @@ import Register from '../register/register';
 import Settings from '../settings/settings';
 import ProfilesContainer from '../profiles/profilesContainer';
 import Mailbox from '../messages/mailbox';
+import Events from '../events/events';
+import Dislikes from '../affinities/dislikes';
+import Search from '../search/search';
 
 const About = () => (
   <div>
@@ -112,12 +115,31 @@ class MainRouter extends Reflux.Component {
 		return (
 			<Router>
 				<div>
+					<nav className="navbar" style={{backgroundColor: '#F1A9A0'}}>
+						<div className="container">
+							<h1 style={{color: 'white', padding: '0px', margin: '10px', display: 'inline-block'}}>Upendo</h1>
+
+							<div className="float-right" style={{marginTop: '10px'}}>
+								<form className="form-inline my-2 my-lg-0">
+									{/*<input className="form-control mr-sm-2" type="text" placeholder="Search" />*/}
+									{!isUserConnected ?
+										<div>
+											<Link className="btn btn-outline-primary my-2 my-sm-0" to="/login">Login</Link>
+											&nbsp;
+											<Link className="btn btn-outline-primary my-2 my-sm-0" to="/register">Register</Link>
+										</div>
+										:
+										<button className="btn btn-warning my-2 my-sm-0" onClick={this.logout}>Logout</button>
+									}
+								</form>
+							</div>
+						</div>
+					</nav>
 					<nav className="navbar navbar-toggleable-md navbar-light bg-faded">
 						<div className="container">
 							<button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 								<span className="navbar-toggler-icon"></span>
 							</button>
-							<Link className="navbar-brand" to="/">Upendo</Link>
 							
 							<div className="collapse navbar-collapse" id="navbarSupportedContent">
 								<ul className="navbar-nav mr-auto">
@@ -131,7 +153,7 @@ class MainRouter extends Reflux.Component {
 										<Link className={isUserConnected ? "nav-link" : "nav-link disabled"} to="/affinities">Affinities</Link>
 									</li>
 									<li className="nav-item">
-										<Link className="nav-link disabled" to="/events">Events</Link>
+										<Link className={isUserConnected ? "nav-link" : "nav-link disabled"} to="/events">Events</Link>
 									</li>
 									<li className="nav-item">
 										<Link className={isUserConnected ? "nav-link" : "nav-link disabled"} to="/messages">Messages</Link>
@@ -149,19 +171,6 @@ class MainRouter extends Reflux.Component {
 										<Link className="nav-link" to="/about">About</Link>
 									</li>
 								</ul>
-							
-								<form className="form-inline my-2 my-lg-0">
-									{/*<input className="form-control mr-sm-2" type="text" placeholder="Search" />*/}
-									{!isUserConnected ?
-									<div>
-										<Link className="btn btn-outline-primary my-2 my-sm-0" to="/login">Login</Link>
-										&nbsp;
-										<Link className="btn btn-outline-primary my-2 my-sm-0" to="/register">Register</Link>
-									</div>
-									:
-									<button className="btn btn-outline-warning my-2 my-sm-0" onClick={this.logout}>Logout</button>
-									}
-								</form>
 							</div>
 						</div>
 					</nav>
@@ -179,7 +188,10 @@ class MainRouter extends Reflux.Component {
 						<PropsRoute path='/profiles' component={ProfilesContainer} axiosParams={this.getCustomAxiosParams()} />
 						<Route exact path="/about" component={About}/>
 						<Route exact path="/settings" component={Settings}/>
-						<Route path="/topics" component={Topics}/>											
+						<Route exact path="/events" component={Events}/>
+						<Route exact path="/dislikes" component={Dislikes}/>
+						<Route exact path="/search" component={Search}/>
+						<Route path="/topics" component={Topics}/>
 					</div>
 
 					<footer className="row" style={{backgroundColor: "#7f8c8d", color: "white", marginTop: "25px", paddingTop: "25px", paddingBottom: "25px"}}>

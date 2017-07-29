@@ -120,7 +120,20 @@ export default class ProfileShow extends Reflux.Component {
 			const profile = this.state.userData.profile;
 						
 			return (
-				<div>					
+				<div>
+
+                    {this.state.userData.id !== this.state.user.id ?
+						<div className="row" style={{marginTop: '-5px'}}>
+							<div className="col-md-12 text-md-center">
+								{this.state.messageToDisplay ? (<div className="mb-2">{this.state.messageToDisplay}</div>) : null}
+								<button className={this.state.hasSomeoneLiked ? (this.state.hasSomeoneLiked === 'user' ? "btn btn-sm btn-outline-success disabled" : "btn btn-sm btn-outline-success") : "btn btn-sm btn-outline-success"} onClick={() => this.sendRelation("1")}>Like</button>
+								&nbsp;&nbsp;&nbsp;
+                            	<button className={this.state.hasSomeoneDisliked ? (this.state.hasSomeoneDisliked === 'user' ? "btn btn-sm btn-outline-danger disabled" : "btn btn-sm btn-outline-danger") : "btn btn-sm btn-outline-danger"} onClick={() => this.sendRelation("3")}>Dislike</button>
+								<hr />
+							</div>
+						</div>
+                        : null}
+
 					<div className="row">													
 						
 						{user.photos.length > 0 ?						
@@ -130,13 +143,13 @@ export default class ProfileShow extends Reflux.Component {
 										if (index === 0) {
 											return (
 												<div key={index} className="col-md-12">
-													<img src={"http://localhost/mynewupendo"+photo.path} className="img-thumbnail" />											
+													<img src={"http://assets.upendo.localhost"+photo.path} className="img-thumbnail" />
 												</div>
 											);
 										} else {
 											return (
 												<div key={index} className="col-md-6">
-													<img src={"http://localhost/mynewupendo"+photo.path} className="img-thumbnail" />											
+													<img src={"http://assets.upendo.localhost"+photo.path} className="img-thumbnail" />
 												</div>
 											);
 										}									
@@ -154,20 +167,10 @@ export default class ProfileShow extends Reflux.Component {
 							</div>
 						}
 						
-						<div className="col-md-8">								
+						<div className="col-md-8">
 								
-								{this.state.userData.id !== this.state.user.id ?
-								<div className="float-right">
-									{this.state.messageToDisplay}
-									&nbsp;&nbsp;&nbsp;										
-									<button className={this.state.hasSomeoneDisliked ? (this.state.hasSomeoneDisliked === 'user' ? "btn btn-sm btn-outline-danger disabled" : "btn btn-sm btn-outline-danger") : "btn btn-sm btn-outline-danger"} onClick={() => this.sendRelation("3")}>Dislike</button>
-									&nbsp;
-									<button className={this.state.hasSomeoneLiked ? (this.state.hasSomeoneLiked === 'user' ? "btn btn-sm btn-outline-success disabled" : "btn btn-sm btn-outline-success") : "btn btn-sm btn-outline-success"} onClick={() => this.sendRelation("1")}>Like</button>									
-								</div>
-								: null}
-								
-								<h2>{user.username} ({user.firstname})</h2>	
-								<br />
+							<h2>{user.username} ({user.firstname})</h2>
+							<br />
 								
 							{profile ?								
 							<div className="row">

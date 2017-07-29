@@ -69,7 +69,7 @@ export default class Mailbox extends Reflux.Component {
 				<Route exact path={this.props.match.url} render={() => {    
 					return (
 						<div className="row">
-							<div className="col-md-8">
+							<div className="col-md-12">
 								<h4>Conversations</h4>
 								<ConversationsList
 									match={this.props.match}
@@ -77,10 +77,12 @@ export default class Mailbox extends Reflux.Component {
 									connectedUserId={this.state.user.id}
 								/>
 							</div>
+							{/*
 							<div className="col-md-4">
 								<h4>Contacts</h4>
 								<Contacts/>
 							</div>
+							 */}
 						</div>						
 					);
 				}}/>

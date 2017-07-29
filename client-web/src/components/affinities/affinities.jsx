@@ -87,21 +87,26 @@ export default class Affinities extends Reflux.Component {
 							</div>							
 						
 						<hr />
-						<h4>You like</h4>						
-							<div className="row">					
-								{liked.map((relation, index) => {										
-									return this.renderProfile(relation, index);
-								})}
-							</div>
-						
-						<hr />
 						<h4>They like you</h4>
-							<div className="row">					
-								{beenLiked.map((relation, index) => {										
+							<div className="row">
+								{beenLiked.map((relation, index) => {
 									return this.renderProfile(relation, index);
 								})}
 							</div>
-							
+
+						<hr />
+						<h4>You like</h4>
+							<div className="row">
+								{liked.map((relation, index) => {
+									return this.renderProfile(relation, index);
+								})}
+							</div>
+
+						<h4 />
+
+						<hr />
+						<Link to="/dislikes">See the disliked profiles</Link>
+
 				</div>
 			);
 			

@@ -33,13 +33,13 @@ export default class ProfileEdit extends React.Component {
 											if (index === 0) {
 												return (
 													<div key={index} className="col-md-12">
-														<img src={"http://localhost/mynewupendo"+photo.path} className="img-thumbnail" />											
+														<img src={"http://assets.upendo.localhost"+photo.path} className="img-thumbnail" />
 													</div>
 												);
 											} else {
 												return (
 													<div key={index} className="col-md-6">
-														<img src={"http://localhost/mynewupendo"+photo.path} className="img-thumbnail" />											
+														<img src={"http://assets.upendo.localhost"+photo.path} className="img-thumbnail" />
 													</div>
 												);
 											}									

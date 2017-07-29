@@ -88,7 +88,7 @@ export default class UploadPhotos extends Reflux.Component {
 											<button className="btn btn-outline-success btn-sm disabled">Set As Main</button>
 											<button className="btn btn-outline-danger btn-sm float-right" onClick={() => this.deletePhoto(photo.id, index)}>Delete</button>
 											
-											<img src={"http://localhost/mynewupendo"+photo.path} className="img-thumbnail" />
+											<img src={"http://assets.upendo.localhost"+photo.path} className="img-thumbnail" />
 											
 										</div>
 									);
