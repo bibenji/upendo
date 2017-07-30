@@ -12,7 +12,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(attributes={
  * 		"normalization_context"={"groups"={"conversation"}}, 
- * 		"denormalization_context"={"groups"={"conversation"}} 
+ * 		"denormalization_context"={"groups"={"conversation"}},
+ *      "filters"={"messages.order"}
  * })
  * @ORM\Entity()
  * @ORM\Table(name="conversation")
@@ -90,7 +91,7 @@ class Conversation
      */
     public function getMessages()
     {
-        return $this->messages;
+        return array_reverse($this->messages->toArray());
     }
 
     /**

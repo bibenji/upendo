@@ -6,9 +6,11 @@ import CustomAxios from '../../tools/connectivity/api';
 const Styles = {
 	MainContainerStyle: {
 		display: "flex",
-		flexDirection: "column"		
+		flexDirection: "column",
+        // overflow: 'scroll'
 	},	
-	ConversationContainerStyle: {		
+	ConversationContainerStyle: {
+		flex: 1,
 		overflow: "auto",
 		width: "100%",
 		margin: "0px auto",
@@ -70,9 +72,10 @@ export default class Conversation extends React.Component {
 		const body = document.body;
 		const html = document.documentElement;
 
-		const height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
-				
-		return (height - 150) + "px";
+		// const height = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );
+        let height = isNaN(window.innerHeight) ? window.clientHeight : window.innerHeight;
+
+		return (height - 225) + "px";
 	}
 	
 	updateConversationHeight() {		
@@ -117,8 +120,13 @@ export default class Conversation extends React.Component {
 				let updatedConversation = that.state.conversation;
 				updatedConversation.messages.push(response.data);
 				that.setState({
-					conversation: updatedConversation
-				}, that.props.updateConversation(updatedConversation));
+					conversation: updatedConversation,
+					fieldValue: ''
+				}, () => {
+					that.props.updateConversation(updatedConversation);
+					console.log(that.scrollToCheck.scrollHeight);
+					that.scrollToCheck.scrollTop = that.scrollToCheck.scrollHeight;
+                });
 			}
 		});						
 	}
@@ -130,7 +138,7 @@ export default class Conversation extends React.Component {
 		return (
 			<div style={NotMutatedMainContainerStyle}>
 				
-				<div className="row" style={Styles.ConversationContainerStyle}>
+				<div className="row" style={Styles.ConversationContainerStyle} ref={(ref) => { this.scrollToCheck = ref; }}>
 					<div className="col-md-12">
 						{conversation && conversation.messages && conversation.messages.length > 0 ? 
 							conversation.messages.map((message, index) => {

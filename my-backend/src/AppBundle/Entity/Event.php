@@ -48,6 +48,20 @@ class Event
     protected $eventDate;
 
     /**
+     * @var string
+     * @ORM\Column(type="string")
+     * @Groups({"event"})
+     */
+    protected $eventDescription;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     * @Groups({"event"})
+     */
+    protected $maxParticipants;
+
+    /**
      * @var User
      * @ORM\ManyToMany(targetEntity="User", mappedBy="participations")
      * @Groups({"event"})
@@ -117,6 +131,38 @@ class Event
     }
 
     /**
+     * @return string
+     */
+    public function getEventDescription()
+    {
+        return $this->eventDescription;
+    }
+
+    /**
+     * @param string $eventDescription
+     */
+    public function setEventDescription($eventDescription)
+    {
+        $this->eventDescription = $eventDescription;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxParticipants()
+    {
+        return $this->maxParticipants;
+    }
+
+    /**
+     * @param int $maxParticipants
+     */
+    public function setMaxParticipants($maxParticipants)
+    {
+        $this->maxParticipants = $maxParticipants;
+    }
+
+    /**
      * @return ArrayCollection
      */
     public function getParticipants()
@@ -125,11 +171,26 @@ class Event
     }
 
     /**
-     * @param Collection $participants
+     * @param array $participants
      */
-    public function setParticipants(Collection $participants)
+    public function setParticipants(array $participants)
     {
-        $this->participants = $participants;
+        foreach ($participants as $oneParticipant) {
+            if (!$this->hasParticipant($oneParticipant)) {
+                $oneParticipant->addParticipation($this);
+                $this->participants->add($oneParticipant);
+            }
+        }
+    }
+
+    private function hasParticipant($participant) {
+        foreach ($this->participants as $oneParticipant) {
+            if ($oneParticipant->getId() === $participant->getId()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

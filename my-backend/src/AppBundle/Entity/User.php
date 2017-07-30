@@ -38,7 +38,7 @@ class User implements UserInterface
     /**
      * @var string
      * @ORM\Column(name="username", type="string")
-	 * @Groups({"user", "conversation", "message"})
+	 * @Groups({"user", "conversation", "message", "event"})
      */
     protected $username;
 
