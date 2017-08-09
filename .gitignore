@@ -12,7 +12,7 @@
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
-/vendor/
+/api/vendor/
 /web/bundles/
 /mobile/node_modules
 .env
@@ -20,9 +20,8 @@
 /client-gestionly/
 /client-orpheon/
 /client-web/node_modules
-/backend/var
-/backend/vendor
-/my-backend/var
-/my-backend/vendor
-/upendodansupendo/
+/api/var
+/api/vendor
+/api/var
+/api/vendor
 /docker/database/

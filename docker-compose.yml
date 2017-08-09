@@ -28,8 +28,8 @@ services:
         depends_on:
            - upendo_php
         volumes:
-           - ./my-backend/:/opt/project/
-           - ./docker/nginx/config/nginx.conf:/etc/nginx/conf.d/default.conf
+           - ./api/public:/opt/project/public
+           - ./docker/nginx/config/api.conf:/etc/nginx/conf.d/default.conf
            - ./var/logs/nginx/:/var/log/nginx
         environment:
            - NGINX_PHP_FPM=${NGINX_PHP_FPM}
@@ -44,9 +44,9 @@ services:
            - "traefik.frontend.passHostHeader=true"
            - "traefik.backend.loadbalancer.method=drr"
         volumes:
-           - ./my-backend/:/opt/project/
-           - ./docker/nginx_assets/config/nginx.conf:/etc/nginx/conf.d/default.conf
-           - ./var/logs/nginx_assets/:/var/log/nginx
+           - ./api/public:/opt/project/public
+           - ./docker/nginx/config/assets.conf:/etc/nginx/conf.d/default.conf
+           - ./var/logs/nginx/:/var/log/nginx
         environment:
            - NGINX_PHP_FPM=${NGINX_PHP_FPM}
 
@@ -62,7 +62,7 @@ services:
         depends_on:
             - upendo_database
         volumes:
-            - ./my-backend/:/opt/project/
+            - ./api/:/opt/project/
         labels:
             - "traefik.enable=false"
 

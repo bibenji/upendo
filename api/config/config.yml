@@ -1,0 +1,122 @@
+imports:
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+    profiles_uploads: "/web/resources/img/profiles/"
+    profiles_uploads_short_path: "%kernel.root_dir%/.."
+    profiles_uploads_full_path: "%kernel.root_dir%/../web/resources/img/profiles/"    
+
+framework:
+    #esi:             ~
+    #translator:      { fallbacks: ["%locale%"] }
+    secret:          "%env(SECRET)%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  snc_redis.session.handler
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+    php_errors:
+        log: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_pgsql
+        host:     "%env(POSTGRES_HOST)%"
+        port:     "%env(POSTGRES_DB)%"
+        dbname:   "%env(POSTGRES_DB)%"
+        user:     "%env(POSTGRES_USER)%"
+        password: "%env(POSTGRES_PASSWORD)%"
+        server_version: 9.6
+        charset:  UTF8
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        entity_managers:
+            default:
+                auto_mapping: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    Upendo:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.root_dir%/src/Entity'
+                        prefix: Upendo\Entity
+                        alias: Upendo
+
+doctrine_migrations:
+    dir_name: '%kernel.root_dir%/../etc/DoctrineMigrations'
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%env(MAILER_TRANSPORT)%"
+    host:      "%env(MAILER_HOST)%"
+    username:  "%env(MAILER_USER)%"
+    password:  "%env(MAILER_PASSWORD)%"
+    spool:     { type: memory }
+
+# Nelmio CORS
+nelmio_cors:
+    defaults:
+        # allow_origin:   ["%env(CORS_ALLOW_ORIGIN)%"]
+        allow_origin:   ["*"]
+#        origin_regex: true
+#        allow_origin: ['^http://localhost:[0-9]+']
+        allow_methods:  ["POST", "PUT", "GET", "DELETE", "OPTIONS"]
+        allow_headers:  ["content-type", "authorization"]
+        expose_headers: ["link"]
+        max_age:        3600
+    paths:
+        '^/': ~
+        
+bazinga_faker:
+    orm: doctrine
+    locale: fr
+    
+    entities:
+        Upendo\Entity\User:
+            number: 10
+#       Upendo\Entity\Profile:
+#             number: 10
+
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: "redis://%env(REDIS_HOST)%"
+            logging: "%kernel.debug%"
+
+        cache:
+            type: predis
+            alias: cache
+            dsn: "redis://%env(REDIS_HOST)%"
+            logging: "%kernel.debug%"
+        session:
+            type: predis
+            alias: session
+            dsn: "redis://%env(REDIS_HOST)%"
+            logging: "%kernel.debug%"
+    session:
+        client: session

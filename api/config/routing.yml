@@ -1,0 +1,23 @@
+api:
+    resource: '.'
+    type:     'api_platform'
+
+# app:
+    # resource: '@AppBundle/Action/'
+    # type:     'annotation'
+
+api_login:
+    path: /login
+    defaults:
+        _controller: Upendo:Security:login
+
+test_action:
+    path: /test
+    defaults:
+        _controller: Upendo:Security:test
+
+file_upload:
+    path: /upload
+    defaults:
+        _controller: Upendo:File:upload
+    

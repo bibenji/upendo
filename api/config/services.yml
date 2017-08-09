@@ -1,0 +1,29 @@
+services:
+    app.security.user_provider:
+        class: Upendo\Security\UserProvider
+        arguments: [ '@doctrine.orm.entity_manager' ]
+    app.security.api_key_authenticator:
+        class: Upendo\Security\ApiKeyAuthenticator
+    app.security.success_handler:
+        class: Upendo\Security\SuccessHandler
+        arguments: [ '@doctrine.orm.entity_manager' ]
+    app.listener.password_encoder:
+        class: Upendo\EventListener\PasswordEncoder
+        arguments: [ '@security.password_encoder' ]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+
+    app.filter.user:
+        class: 'Upendo\Filter\UsersFilter'
+        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ { gender: 'exact', profile.searchingGender: 'exact'} ]
+        tags:      [ { name: 'api_platform.filter', id: 'users.list' } ]
+        calls:
+            - { method: setTokenStorage, arguments: ['@logger'] }
+
+    # doctrine subscribers
+    'Upendo\EventSubscriber\DoctrineEventSubscriber':
+        arguments: [ '@security.token_storage', '@request_stack', "%profiles_uploads_short_path%" ]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+    

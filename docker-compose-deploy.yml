@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
     upendo_nginx:
@@ -9,11 +9,9 @@ services:
            - "traefik.port=80"
            - "traefik.frontend.passHostHeader=true"
            - "traefik.backend.loadbalancer.method=drr"
-        volumes_from:
-            - upendo_php
         volumes:
-           - ./docker/nginx/config/nginx.conf:/etc/nginx/conf.d/default.conf
-           - ./:/opt/project
+           - ./docker/nginx/config/assets.conf:/etc/nginx/conf.d/default.conf
+           - ./api/public:/opt/project/public
 
     upendo_php:
         build:
@@ -27,7 +25,7 @@ services:
             - upendo_rabbitmq
             - upendo_database
         volumes:
-            - ./docker/nginx/config/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./docker/nginx/config/assets.conf:/etc/nginx/conf.d/default.conf
             - ./:/opt/project
         environment:
             - LOGSTASH_HOST=logstash.localhost
