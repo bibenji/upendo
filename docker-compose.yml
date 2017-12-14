@@ -12,16 +12,16 @@ services:
         command: npm run start
         labels:
             - "traefik.backend=upendo_client"
-            - "traefik.frontend.rule=Host:${SITE_HOST}"
+            - "traefik.frontend.rule=Host:upendo.localhost"
             - "traefik.port=4001"
             - "traefik.frontend.passHostHeader=true"
 
     nginx:
         user: ikimea
-        image: registry.containers.ovh.net/php/upendo/nginx
+        image: registry.containers.ovh.net/upendo/nginx
         labels:
            - "traefik.backend=api.upendo"
-           - "traefik.frontend.rule=Host:api.${SITE_HOST}"
+           - "traefik.frontend.rule=Host:api.upendo.localhost"
            - "traefik.port=80"
            - "traefik.frontend.passHostHeader=true"
            - "traefik.backend.loadbalancer.method=drr"
@@ -34,10 +34,10 @@ services:
 
     assets:
         user: ikimea
-        image: registry.containers.ovh.net/php/upendo/nginx
+        image: registry.containers.ovh.net/upendo/nginx
         labels:
            - "traefik.backend=assets.upendo"
-           - "traefik.frontend.rule=Host:assets.${SITE_HOST}"
+           - "traefik.frontend.rule=Host:assets.api.upendo.localhost"
            - "traefik.port=80"
            - "traefik.frontend.passHostHeader=true"
            - "traefik.backend.loadbalancer.method=drr"
@@ -48,7 +48,7 @@ services:
 
     php:
         user: ikimea
-        image: registry.containers.ovh.net/php/upendo/php
+        image: registry.containers.ovh.net/upendo/php
         env_file: [".env", "api/docker/.env.dev"]
         depends_on:
             - database
