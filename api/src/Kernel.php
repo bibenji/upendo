@@ -1,9 +1,11 @@
 <?php
 
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpKernel\Kernel;
+namespace Upendo;
 
-class AppKernel extends Kernel
+use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+
+class Kernel extends Kernel
 {
     public function registerBundles()
     {

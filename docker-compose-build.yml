@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+    upendo_nginx:
+        image: registry.containers.ovh.net/upendo/nginx
+        build:
+            context: .
+            dockerfile: api/docker/nginx/Dockerfile
+            args:
+                GID: 3000
+                UID: 3000
+
+    upendo_php:
+        image: registry.containers.ovh.net/php/upendo/php
+        build:
+            context: .
+            dockerfile: api/docker/php/Dockerfile
+            args:
+                GID: 3000
+                UID: 3000

@@ -20,9 +20,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Message
 {     
 	/**
-	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Column(name="id", type="string")
 	 * @ORM\Id()
-	 * @ORM\GeneratedValue(strategy="AUTO")
 	 * @Groups({"conversation", "message"})
 	 */	 
     protected $id;
@@ -63,7 +62,7 @@ class Message
 
     public function __construct()
     {
-        // $this->id = Uuid::uuid4()->toString();
+        $this->id = Uuid::uuid4()->toString();
 		$this->messageDate = new \DateTime();
     }
 

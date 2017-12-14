@@ -108,7 +108,8 @@ class Conversation
 	}
 	
 	public function getLastMessage()
-	{		
+	{
+	    //$this->messages-
 		return $this->messages->get(count($this->messages)-1);		
 	}
 }
