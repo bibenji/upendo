@@ -29,7 +29,7 @@ services:
            - php
         volumes:
            - ./api/public:/opt/project/public
-           - ./docker/nginx/config/api.conf:/etc/nginx/conf.d/default.conf
+           - ./api/docker/nginx/config/api.conf:/etc/nginx/conf.d/default.conf
            - ./var/logs/nginx/:/var/log/nginx
 
     assets:
@@ -43,7 +43,7 @@ services:
            - "traefik.backend.loadbalancer.method=drr"
         volumes:
            - ./api/public:/opt/project/public
-           - ./docker/nginx/config/assets.conf:/etc/nginx/conf.d/default.conf
+           - ./api/docker/nginx/config/assets.conf:/etc/nginx/conf.d/default.conf
            - ./var/logs/nginx/:/var/log/nginx
 
     php:

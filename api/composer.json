@@ -3,7 +3,7 @@
     "license": "proprietary",
     "type": "project",
     "description": "Upendo Api",
-    "homepage": "https://upendo.com",
+    "homepage": "https://www.upendo.com",
     "authors": [
         {
             "name": "Mlanawo Mbechezi",
@@ -12,13 +12,12 @@
         },
         {
             "name": "Benjamin Billette",
-            "email": "Benjamin.Billet@hotmail.com"
+            "email": "Benjamin.Billet@hotmail.com",
+            "homepage": "https://benjamin.billette.com"
         }
     ],
     "autoload": {
-        "psr-4": { "Upendo\\": "src/" },
-        "classmap": [ "src/AppKernel.php", "src/AppCache.php" ]
-
+        "psr-4": { "Upendo\\": "src/" }
     },
     "autoload-dev": {
         "psr-4": { "Tests\\": "tests/" },

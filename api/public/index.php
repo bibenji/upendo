@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\HttpFoundation\Request;
+use Upendo\Kernel;
 
 /*
  * @var Composer\Autoload\ClassLoader
