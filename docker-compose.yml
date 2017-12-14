@@ -11,7 +11,7 @@ services:
             - 4001:4001
         command: npm run start
         labels:
-            - "traefik.backend=upendo_client"
+            - "traefik.backend=client.upendo"
             - "traefik.frontend.rule=Host:upendo.localhost"
             - "traefik.port=4001"
             - "traefik.frontend.passHostHeader=true"
@@ -49,7 +49,7 @@ services:
     php:
         user: ikimea
         image: registry.containers.ovh.net/upendo/php
-        env_file: [".env", "api/docker/.env.dev"]
+        env_file: ["api/docker/.env.dev", ".env"]
         depends_on:
             - database
         volumes:
@@ -59,7 +59,7 @@ services:
 
     database:
         image: postgres:9.6
-        env_file: [".env", "api/docker/.env.dev"]
+        env_file: ["api/docker/.env.dev", ".env"]
         volumes:
             - ./docker/database/:/var/lib/postgresql/data/
         labels:

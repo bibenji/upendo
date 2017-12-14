@@ -25,7 +25,6 @@ framework:
         engines: ['twig']
     default_locale:  "%locale%"
     trusted_hosts:   ~
-    trusted_proxies: ~
     session:
         handler_id:  snc_redis.session.handler
     fragments:       ~
@@ -44,7 +43,7 @@ doctrine:
     dbal:
         driver:   pdo_pgsql
         host:     "%env(POSTGRES_HOST)%"
-        port:     "%env(POSTGRES_DB)%"
+        port:     "%env(POSTGRES_PORT)%"
         dbname:   "%env(POSTGRES_DB)%"
         user:     "%env(POSTGRES_USER)%"
         password: "%env(POSTGRES_PASSWORD)%"
