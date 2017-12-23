@@ -22,7 +22,8 @@ export default class ProfileShow extends Reflux.Component {
 			relation: null,
 			hasSomeoneLiked: false,
 			hasSomeoneDisliked: false,
-			messageToDisplay: null
+			messageToDisplay: null,
+			currentDiapoPhoto: 0
 		};
 		this.store = Store;
 	}
@@ -111,16 +112,74 @@ export default class ProfileShow extends Reflux.Component {
 				}
 			});			
 		}							
-	}	
-	
+	}
+
+	changeCurrentDiapoPhoto(direction) {
+		let newCurrentDiapoPhoto = 0;
+
+		if (direction === "prev") {
+			if (this.state.currentDiapoPhoto !== 0) {
+				newCurrentDiapoPhoto = --this.state.currentDiapoPhoto;
+			} else {
+                newCurrentDiapoPhoto = this.state.userData.photos.length-1;
+			}
+		}
+
+		if (direction === "next") {
+            if (this.state.currentDiapoPhoto === this.state.userData.photos.length-1) {
+            	newCurrentDiapoPhoto = 0;
+            } else {
+				newCurrentDiapoPhoto = ++this.state.currentDiapoPhoto;
+			}
+		}
+
+		let newState = this.state;
+		newState.currentDiapoPhoto = newCurrentDiapoPhoto;
+
+		this.setState(newState);
+	}
+
+	openDiaporama(event, nbPhoto) {
+		event.preventDefault();
+
+		this.setState({
+			currentDiapoPhoto: nbPhoto
+		});
+
+		const options = [];
+
+		$('#diaporamaModal').modal(options);
+	}
+
 	render() {
 		if (this.state.userData) {
 			
 			const user = this.state.userData;
 			const profile = this.state.userData.profile;
-						
+
 			return (
 				<div>
+
+					<div
+						id="diaporamaModal"
+						className="modal fade diapo-photos"
+						tabindex="-1"
+						role="dialog"
+						aria-labelledby="myLargeModalLabel"
+						aria-hidden="true"
+						// ref={(modal) => {this.diaporama = modal}}
+					>
+						<div className="modal-dialog modal-lg">
+							<div className="modal-content">
+								<img src={"http://assets.upendo.localhost"+user.photos[this.state.currentDiapoPhoto].path} className="img-thumbnail" />
+								<div className="text-center">
+									<button onClick={() => this.changeCurrentDiapoPhoto("prev")} className="btn">Previous</button>
+									&nbsp;&nbsp;&nbsp;
+									<button onClick={() => this.changeCurrentDiapoPhoto("next")} className="btn">Next</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
                     {this.state.userData.id !== this.state.user.id ?
 						<div className="row" style={{marginTop: '-5px'}}>
@@ -143,13 +202,17 @@ export default class ProfileShow extends Reflux.Component {
 										if (index === 0) {
 											return (
 												<div key={index} className="col-md-12">
-													<img src={"http://assets.upendo.localhost"+photo.path} className="img-thumbnail" />
+													<a href="#" onClick={(event) => this.openDiaporama(event, index)}>
+														<img src={"http://assets.upendo.localhost"+photo.path} className="img-thumbnail" />
+													</a>
 												</div>
 											);
 										} else {
 											return (
 												<div key={index} className="col-md-6">
-													<img src={"http://assets.upendo.localhost"+photo.path} className="img-thumbnail" />
+													<a href="#" onClick={(event) => this.openDiaporama(event, index)}>
+														<img src={"http://assets.upendo.localhost"+photo.path} className="img-thumbnail" />
+													</a>
 												</div>
 											);
 										}									

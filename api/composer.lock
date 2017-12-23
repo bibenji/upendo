@@ -958,38 +958,40 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "v2.5.13",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "93103f44a3e36e7b48165b6e6b736833f33b18ef"
+                "reference": "374e7ace49d864dad8cddbc55346447c8a6a2083"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/93103f44a3e36e7b48165b6e6b736833f33b18ef",
-                "reference": "93103f44a3e36e7b48165b6e6b736833f33b18ef",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/374e7ace49d864dad8cddbc55346447c8a6a2083",
+                "reference": "374e7ace49d864dad8cddbc55346447c8a6a2083",
                 "shasum": ""
             },
             "require": {
-                "doctrine/cache": "~1.4",
-                "doctrine/collections": "~1.2",
-                "doctrine/common": ">=2.5-dev,<2.9-dev",
-                "doctrine/dbal": ">=2.5-dev,<2.7-dev",
-                "doctrine/instantiator": "^1.0.1",
+                "doctrine/annotations": "~1.5",
+                "doctrine/cache": "~1.6",
+                "doctrine/collections": "^1.4",
+                "doctrine/common": "^2.7.1",
+                "doctrine/dbal": "^2.6",
+                "doctrine/instantiator": "~1.1",
                 "ext-pdo": "*",
-                "php": ">=5.4",
-                "symfony/console": "~2.5|~3.0|~4.0"
+                "php": "^7.1",
+                "symfony/console": "~3.0|~4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "symfony/yaml": "~2.3|~3.0|~4.0"
+                "doctrine/coding-standard": "^1.0",
+                "phpunit/phpunit": "^6.5",
+                "squizlabs/php_codesniffer": "^3.2",
+                "symfony/yaml": "~3.4|~4.0"
             },
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
             "bin": [
-                "bin/doctrine",
-                "bin/doctrine.php"
+                "bin/doctrine"
             ],
             "type": "library",
             "extra": {
@@ -998,8 +1000,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Doctrine\\ORM\\": "lib/"
+                "psr-4": {
+                    "Doctrine\\ORM\\": "lib/Doctrine/ORM"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1022,6 +1024,10 @@
                 {
                     "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com"
                 }
             ],
             "description": "Object-Relational-Mapper for PHP",
@@ -1030,7 +1036,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2017-11-27T23:25:55+00:00"
+            "time": "2017-12-20T00:38:15+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -2500,16 +2506,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "7e51b0df8908900c443494092843d28ff90e03a8"
+                "reference": "aca1ac2ac6d45c5e94be39a22c91948920226207"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/7e51b0df8908900c443494092843d28ff90e03a8",
-                "reference": "7e51b0df8908900c443494092843d28ff90e03a8",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/aca1ac2ac6d45c5e94be39a22c91948920226207",
+                "reference": "aca1ac2ac6d45c5e94be39a22c91948920226207",
                 "shasum": ""
             },
             "require": {
@@ -2647,7 +2653,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2017-12-05T00:19:42+00:00"
+            "time": "2017-12-15T03:06:38+00:00"
         },
         {
             "name": "twig/twig",
@@ -3124,7 +3130,7 @@
                 "testing",
                 "web"
             ],
-            "time": "2017-12-13T13:27:46+00:00"
+            "time": "2017-12-13 13:27:46"
         },
         {
             "name": "behat/mink-browserkit-driver",
@@ -3180,7 +3186,7 @@
                 "browser",
                 "testing"
             ],
-            "time": "2017-12-04T14:53:23+00:00"
+            "time": "2017-12-04 14:53:23"
         },
         {
             "name": "behat/mink-extension",
@@ -3667,7 +3673,7 @@
         },
         {
             "name": "symfony/class-loader",
-            "version": "v3.4.1",
+            "version": "v3.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/class-loader.git",
@@ -3723,16 +3729,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v4.0.1",
+            "version": "v4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "65fb01d93337b8e592790ba34556bfb0c0bbdd5f"
+                "reference": "61c84ebdce0d4c289413a222ee545f0114e60120"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/65fb01d93337b8e592790ba34556bfb0c0bbdd5f",
-                "reference": "65fb01d93337b8e592790ba34556bfb0c0bbdd5f",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/61c84ebdce0d4c289413a222ee545f0114e60120",
+                "reference": "61c84ebdce0d4c289413a222ee545f0114e60120",
                 "shasum": ""
             },
             "require": {
@@ -3781,7 +3787,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2017-12-04T20:23:32+00:00"
+            "time": "2017-12-14T19:48:22+00:00"
         }
     ],
     "aliases": [],

@@ -37,14 +37,14 @@ services:
         image: registry.containers.ovh.net/upendo/nginx
         labels:
            - "traefik.backend=assets.upendo"
-           - "traefik.frontend.rule=Host:assets.api.upendo.localhost"
+           - "traefik.frontend.rule=Host:assets.upendo.localhost"
            - "traefik.port=80"
            - "traefik.frontend.passHostHeader=true"
            - "traefik.backend.loadbalancer.method=drr"
         volumes:
            - ./api/public:/opt/project/public
            - ./api/docker/nginx/config/assets.conf:/etc/nginx/conf.d/default.conf
-           - ./var/logs/nginx/:/var/log/nginx
+           - ./var/logs/nginx_assets/:/var/log/nginx
 
     php:
         user: ikimea
@@ -64,6 +64,8 @@ services:
             - ./docker/database/:/var/lib/postgresql/data/
         labels:
             - "traefik.enable=false"
+        ports:
+            - 50432:5432
 
 networks:
   default:

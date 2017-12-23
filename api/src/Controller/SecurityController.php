@@ -2,7 +2,6 @@
 
 namespace Upendo\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,6 +14,9 @@ class SecurityController extends Controller
 
     public function testAction()
     {
-        return new JsonResponse(["test" => "test réussi!"]);
+        return new JsonResponse([
+            "test" => "test réussi!",
+            "user" => $this->getUser()
+        ]);
     }
 }
