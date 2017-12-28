@@ -4,7 +4,6 @@ namespace Upendo\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\Uuid;
@@ -410,11 +409,11 @@ class User implements UserInterface
     /**
      * Add photo
      *
-     * @param \AppBundle\Entity\Photo $photo
+     * @param Photo $photo
      *
      * @return User
      */
-    public function addPhoto(\AppBundle\Entity\Photo $photo)
+    public function addPhoto(Photo $photo)
     {
         $this->photos[] = $photo;
 
@@ -424,9 +423,9 @@ class User implements UserInterface
     /**
      * Remove photo
      *
-     * @param \AppBundle\Entity\Photo $photo
+     * @param Photo $photo
      */
-    public function removePhoto(\AppBundle\Entity\Photo $photo)
+    public function removePhoto(Photo $photo)
     {
         $this->photos->removeElement($photo);
     }

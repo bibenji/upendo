@@ -6,9 +6,9 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    profiles_uploads: "/public/resources/img/profiles/"
+    profiles_uploads: "/public/images/profiles/"
     profiles_uploads_short_path: "%kernel.root_dir%/.."
-    profiles_uploads_full_path: "%kernel.root_dir%/../public/resources/img/profiles/"
+    profiles_uploads_full_path: "%kernel.root_dir%/../public/images/profiles/"
 
 framework:
     #esi:             ~

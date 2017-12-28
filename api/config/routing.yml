@@ -9,15 +9,14 @@ api:
 api_login:
     path: /login
     defaults:
-        _controller: Upendo:Security:login
+        _controller: Upendo\Controller\SecurityController::loginAction
 
 test_action:
-    path: /test
+    path: /debug/test
     defaults:
-        _controller: Upendo:Security:test
+        _controller: Upendo\Controller\SecurityController::testAction
 
 file_upload:
     path: /upload
     defaults:
-        _controller: Upendo:File:upload
-    
+        _controller: Upendo\Controller\FileController::uploadAction
