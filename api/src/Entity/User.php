@@ -9,12 +9,13 @@ use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Upendo\Filter\UsersFilter;
 
 /**  
  * @ApiResource(attributes={
- * 		"normalization_context"={"groups"={"user"}}, 
- * 		"denormalization_context"={"groups"={"user"}}, 
- * 		"filters"={"users_filter"}
+ * 		"normalization_context"={"groups"={"user"}},
+ * 		"denormalization_context"={"groups"={"user"}},
+ * 		"filters"={UsersFilter::class}
  * })
  * @ORM\Entity()
  * @ORM\Table(name="users")
@@ -55,7 +56,7 @@ class User implements UserInterface
 	protected $password;
 	
 	/**
-     * @var string
+     * @var null|string
 	 * @Groups({"user"})
 	 */
 	protected $plainPassword;

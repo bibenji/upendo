@@ -61,7 +61,7 @@ export default class GenericInput extends React.Component {
 					className="form-control"
 					id={id}
 					placeholder={placeholder ? this.props.placeholder : ''}
-					value={this.props.value}
+					value={this.props.value ? this.props.value : ''}
 					onChange={this.props.onChange}
 				/>
 			</div>

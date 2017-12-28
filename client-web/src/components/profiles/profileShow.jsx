@@ -160,10 +160,11 @@ export default class ProfileShow extends Reflux.Component {
 			return (
 				<div>
 
+                    {user.photos.length > 0 ?
 					<div
 						id="diaporamaModal"
 						className="modal fade diapo-photos"
-						tabindex="-1"
+						tabIndex="-1"
 						role="dialog"
 						aria-labelledby="myLargeModalLabel"
 						aria-hidden="true"
@@ -180,6 +181,7 @@ export default class ProfileShow extends Reflux.Component {
 							</div>
 						</div>
 					</div>
+					: null}
 
                     {this.state.userData.id !== this.state.user.id ?
 						<div className="row" style={{marginTop: '-5px'}}>
