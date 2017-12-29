@@ -6,4 +6,10 @@ let CustomAxios = axios.create({
   // headers: {'X-Custom-Header': 'foobar'}
 });
 
+CustomAxios.interceptors.response.use(function (response) {
+  return response;
+}, function(error) {
+  window.location.replace("/error");
+});
+
 export default CustomAxios;
