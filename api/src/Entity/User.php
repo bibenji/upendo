@@ -31,14 +31,14 @@ class User implements UserInterface
      * @var string
 	 * @ORM\Column(type="string")
      * @ORM\Id
-	 * @Groups({"user", "relation", "conversation", "message", "daily_profile"})
+	 * @Groups({"user", "relation", "conversation", "message", "daily_profile", "daily_user"})
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(name="username", type="string")
-	 * @Groups({"user", "conversation", "message", "event"})
+	 * @Groups({"user", "conversation", "message", "event", "daily_profile", "daily_user"})
      */
     protected $username;
 
@@ -103,7 +103,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="user")
-	 * @Groups({"user", "conversation"})
+	 * @Groups({"user", "conversation", "daily_user"})
      */
     protected $photos;
 	
@@ -595,6 +595,29 @@ class User implements UserInterface
     public function addParticipation(Event $participation)
     {
         $this->participations[] = $participation;
+    }
+
+    /**
+     * @return mixed|null
+     * @Groups({"user", "conversation", "message", "event", "daily_profile", "daily_user"})
+     */
+    public function getMainPhoto()
+    {
+        $mainPhoto = null;
+
+        if ($this->photos->count() !== 0) {
+            foreach ($this->photos as $photo) {
+                if ($photo->isMain()) {
+                    $mainPhoto = $photo;
+                }
+            }
+
+            if ($mainPhoto === null) {
+                $mainPhoto = $this->photos->get(0);
+            }
+        }
+
+        return $mainPhoto;
     }
 	
     public function getSalt()

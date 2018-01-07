@@ -15,7 +15,7 @@ security:
             security: false                
 
 #        debug:
-#              pattern: ^/(debug/*|daily_profile)
+#              pattern: ^/(debug/*|contacts_list)
 #              anonymous: ~
 
         api:

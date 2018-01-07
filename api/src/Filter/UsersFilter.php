@@ -29,7 +29,7 @@ final class UsersFilter extends AbstractFilter
 
 	protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
     {
-		if ($property !== 'users_filter_by' && $value !== 'criteria') {
+		if ($property !== 'users_filter_by' || $value !== 'criteria') {
 			return;
 		}
 

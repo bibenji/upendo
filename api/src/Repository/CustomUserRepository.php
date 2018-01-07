@@ -105,4 +105,50 @@ class CustomUserRepository extends EntityRepository
 
         return $qb->getQuery()->execute();
     }
+
+    public function getContactsList($user)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb
+            ->leftJoin('u.profile', 'p')
+            ->leftJoin('u.relationsAsOne', 'rao')
+            ->leftJoin('u.relationsAsTwo', 'rat')
+            ->where('rao.userTwo = :current_user OR rat.userOne = :current_user')
+            ->andWhere('rao.status = :status_both_like OR rat.status = :status_both_like')
+            ->setParameters([
+                'current_user' => $user,
+                'status_both_like' => '2'
+            ])
+        ;
+
+        return $qb->getQuery()->execute();
+    }
+
+    public function getDailyUser(User $user)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $today = new \DateTime();
+        $today = $today->format('Y-m-d');
+
+        $qb
+            ->leftJoin('u.dailyProfileAsOne', 'dpao')
+            ->leftJoin('u.dailyProfileAsTwo', 'dpat')
+            ->where('dpao.date = :date OR dpat.date = :date')
+//            ->andWhere('dpat.date = :date')
+//            ->andWhere('dpao.userOne = :other_user')
+            ->andWhere('dpao.userTwo = :current_user OR dpat.userOne = :current_user')
+//            ->andWhere('dpao.userTwo = :current_user')
+//            ->andWhere('dpat.userOne = :current_user')
+//            ->andWhere('dpat.userTwo = :other_user')
+            ->setParameters([
+                'date' => $today,
+                'current_user' => $user,
+//                'other_user' => 'u'
+            ])
+        ;
+
+        return $qb->getQuery()->execute();
+    }
 }

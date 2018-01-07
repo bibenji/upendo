@@ -30,10 +30,12 @@ class Store extends Reflux.Store {
 		}		
 	}
 	
-	onLoginUser(data) {				
+	onLoginUser(data) {
+		console.log('onLoginUser');
 		this.setState({
 			user: data
-		}, localStorage.saveUser(data));		
+		}, localStorage.saveUser(data));
+        window.location.replace("/daily-meet");
 	}
 	
 	onLogoutUser() {
@@ -43,6 +45,7 @@ class Store extends Reflux.Store {
 				apikey: ''
 			}
 		}, localStorage.deleteUser());
+        window.location.replace("/");
 	}
 };
 

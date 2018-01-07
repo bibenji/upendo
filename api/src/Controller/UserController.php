@@ -18,11 +18,9 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-
-
         $userRepository = $em->getRepository('Upendo:User');
-//        $user = $this->getUser();
-        $user = $userRepository->findOneBy(["username" => "bibenji"]);
+        $user = $this->getUser();
+//        $user = $userRepository->findOneBy(["username" => $this->getUser()->getUsername()]);
         $users = $userRepository->getPossibleDailyProfiles($user);
 
         $dailyProfile = $em->getRepository('Upendo:DailyProfile')->getDailyProfile($user);
@@ -64,5 +62,20 @@ class UserController extends Controller
         );
 
         return $jsonContent;
+    }
+
+    public function getContactsAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $userRepository = $em->getRepository('Upendo:User');
+        $user = $this->getUser();
+//        $user = $userRepository->findOneBy(["username" => "bibenji"]);
+        $users = $userRepository->getContactsList($user);
+        $dailyProfile = $userRepository->getDailyUser($user);
+
+        $results = array_merge($users, $dailyProfile);
+
+        return new JsonResponse($this->serializeEntity($results, ['daily_user']));
     }
 }
