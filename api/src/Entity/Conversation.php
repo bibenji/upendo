@@ -8,15 +8,19 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Upendo\Filter\ConversationFromContactFilter;
 
 /**
  * @ApiResource(attributes={
  * 		"normalization_context"={"groups"={"conversation"}}, 
  * 		"denormalization_context"={"groups"={"conversation"}},
- *      "filters"={"messages.order"}
+ *      "filters"={
+ *          "messages.order",
+ *          ConversationFromContactFilter::class
+ *     }
  * })
- * @ORM\Entity()
  * @ORM\Table(name="conversation")
+ * @ORM\Entity(repositoryClass="Upendo\Repository\ConversationRepository")
  */
 class Conversation
 {

@@ -13,10 +13,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false                
-        
-        public:
-            pattern: ^/debug/*
-            anonymous: ~
+
+#        debug:
+#              pattern: ^/(debug/*|contacts_list)
+#              anonymous: ~
 
         api:
             pattern: ^/
@@ -34,5 +34,6 @@ security:
     access_control:
         - { path: ^/*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/daily_profile, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
         - { path: ^/*, roles: ROLE_USER }

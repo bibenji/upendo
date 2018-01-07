@@ -1,3 +1,15 @@
-body {
-  background: #ece7e7;
+/* LAYOUT */
+body { background: #ece7e7;}
+
+/* GENERIC */
+.image-fit { width: 100%}
+
+.contact-round-photo {
+  width: 50px;
+  border-radius: 50%;
 }
+
+.conversations_list-contact-name {
+  margin: 0px;
+}
+

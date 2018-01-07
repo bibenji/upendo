@@ -2,46 +2,53 @@
 
 namespace Upendo\Filter;
 
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\AbstractFilter;
 use Doctrine\ORM\QueryBuilder;
 use Upendo\Entity\User;
 use Upendo\Entity\Profile;
+use Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Psr\Log\LoggerInterface;
 
 final class UsersFilter extends AbstractFilter
-{	
+{
 	protected $tokenStorage;
 	protected $managerRegistry;
     protected $requestStack;
     protected $logger;
     protected $properties;
 
-    public function setTokenStorage(TokenStorageInterface $tokenStorage)
+    public function __construct(ManagerRegistry $managerRegistry, RequestStack $requestStack, LoggerInterface $logger, TokenStorage $tokenStorage)
     {
+        parent::__construct($managerRegistry, $requestStack, $logger);
         $this->tokenStorage = $tokenStorage;
-
+        $this->properties = [];
     }
 
 	protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null)
     {
-		if ($property !== 'users_filter_by' && $value !== 'criteria') {
+		if ($property !== 'users_filter_by' || $value !== 'criteria') {
 			return;
 		}
 
 		/** @var User $user */
 		$user = $this->tokenStorage->getToken()->getUser();				
 
-		$searchingGender = $user->getProfile()->getSearchingGender();
-		
-		$queryBuilder->resetDQLParts();
-		
+		if ($user === 'anon.') { // ne doit jamais arriver
+		    return;
+        }
+
+        $queryBuilder->resetDQLParts();
+
 		$queryBuilder
-			->select('u')
-			->from('AppBundle\Entity\User', 'u')
+			->addSelect('u')
+			->from('Upendo\Entity\User', 'u')
 			->leftJoin('u.profile', 'p')
 			->leftJoin('u.relationsAsOne', 'rao')
-			->leftJoin('u.relationsAsTwo', 'rat')						
+			->leftJoin('u.relationsAsTwo', 'rat')
+			->innerJoin('p.user', 'o') // sinon doctrine rajoute des alias improbables... ??? @fixme
 		;
 
 		if ($searchingGender = $user->getProfile()->getSearchingGender()) {
@@ -74,12 +81,12 @@ final class UsersFilter extends AbstractFilter
 				->setParameter('maxBirthdate', $maxBirthdate)
 			;			
 		}			
-		
+
 		$queryBuilder
 			->andWhere($queryBuilder->expr()->orX(				
 				// soit rao a un status like et l'utilisateur courant n'est pas le dernier a avoir liké
 				$queryBuilder->expr()->andX(
-					$queryBuilder->expr()->eq('rao.status', ':likedStatus'),					
+					$queryBuilder->expr()->eq('rao.status', ':likedStatus'),
 					$queryBuilder->expr()->neq('rao.lastActionUserId', ':lastActionUserId')
 				),
 				// soit rat a un status like et l'utilisateur courant n'est pas le dernier a avoir liké

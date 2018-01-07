@@ -13,13 +13,23 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
 
-    app.filter.user:
-        class: 'Upendo\Filter\UsersFilter'
-        parent: 'api_platform.doctrine.orm.search_filter'
-        arguments: [ { gender: 'exact', profile.searchingGender: 'exact'} ]
-        tags:      [ { name: 'api_platform.filter', id: 'users.list' } ]
-        calls:
-            - { method: setTokenStorage, arguments: ['@logger'] }
+
+#    ManagerRegistry $managerRegistry, RequestStack $requestStack, LoggerInterface $logger = null, array $properties = null
+    'Upendo\Filter\UsersFilter':
+#        parent: 'api_platform.doctrine.orm.search_filter'
+        arguments: [ '@doctrine', '@request_stack', '@logger', '@security.token_storage' ]
+#        arguments: [ { gender: 'exact', profile.searchingGender: 'exact'} ]
+        tags: ['api_platform.filter']
+#        calls:
+#            - { method: setTokenStorage, arguments: ['@security.token_storage'] }
+#        class: 'Upendo\Filter\UsersFilter'
+#        parent: 'api_platform.doctrine.orm.search_filter'
+#        tags:      [ { name: 'api_platform.filter', id: 'users.list' } ]
+
+    'Upendo\Filter\ConversationFromContactFilter':
+        arguments: [ '@doctrine', '@request_stack', '@logger', '@security.token_storage' ]
+        tags: ['api_platform.filter']
+
 
     # doctrine subscribers
     'Upendo\EventSubscriber\DoctrineEventSubscriber':

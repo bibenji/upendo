@@ -39,17 +39,31 @@ export default class Login extends React.Component {
 	
 	render() {
 		return (
-			<div>
-				<h2>Login</h2>
-				<form onSubmit={this.submitForm.bind(this)} className="form-inline">
-										
-					<input id="username" type="text" className="form-control" placeholder="Username" value={this.state.username} onChange={this.updateState.bind(this)} /> &nbsp;
-				
-					<input id="password" type="text" className="form-control" placeholder="Password" value={this.state.password} onChange={this.updateState.bind(this)} /> &nbsp;
-					
-					<input className="btn btn-primary" type="submit" value="Login" />
-				
-				</form>				
+			<div className="row">
+				<div className="col-md-3"></div>
+				<div className="col-md-6">
+					<h2 className="text-right">Login</h2>
+					<div className="card">
+						<div className="card-block">
+							<form onSubmit={this.submitForm.bind(this)} className="form">
+
+								<div className="form-group">
+									<label>Username</label>
+									<input id="username" type="text" className="form-control" placeholder="Username" value={this.state.username} onChange={this.updateState.bind(this)} />
+								</div>
+
+								<div className="form-group">
+									<label>Password</label>
+									<input id="password" type="password" className="form-control" placeholder="Password" value={this.state.password} onChange={this.updateState.bind(this)} />
+								</div>
+
+								<input className="btn btn-primary float-right" type="submit" value="Login" />
+
+							</form>
+						</div>
+					</div>
+				</div>
+				<div className="col-md-3"></div>
 			</div>
 		)
 	}

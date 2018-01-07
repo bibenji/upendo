@@ -22,6 +22,8 @@ import Mailbox from '../messages/mailbox';
 import Events from '../events/events';
 import Dislikes from '../affinities/dislikes';
 import Search from '../search/search';
+import DailyMeet from '../daily-meet/dailyMeet';
+import Error from '../error/error';
 
 const About = () => (
   <div>
@@ -108,10 +110,10 @@ class MainRouter extends Reflux.Component {
 	getCustomAxiosParams() {		
 		return {apikey: this.state.user.apikey};
 	}
-	
+
 	render() {
 		const isUserConnected = (this.state.user.username != '');
-		
+
 		return (
 			<Router>
 				<div>
@@ -140,11 +142,14 @@ class MainRouter extends Reflux.Component {
 							<button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 								<span className="navbar-toggler-icon"></span>
 							</button>
-							
+
 							<div className="collapse navbar-collapse" id="navbarSupportedContent">
 								<ul className="navbar-nav mr-auto">
 									<li className="nav-item active">
 										<Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
+									</li>
+									<li className="nav-item">
+										<Link className={isUserConnected ? "nav-link" : "nav-link disabled"} to="/daily-meet">Daily Meet</Link>
 									</li>
 									<li className="nav-item">
 										<Link className={isUserConnected ? "nav-link" : "nav-link disabled"} to="/profiles">Profiles</Link>
@@ -157,7 +162,7 @@ class MainRouter extends Reflux.Component {
 									</li>
 									<li className="nav-item">
 										<Link className={isUserConnected ? "nav-link" : "nav-link disabled"} to="/messages">Messages</Link>
-									</li>									
+									</li>
 									<li className="nav-item">
 										<Link className={isUserConnected ? "nav-link" : "nav-link disabled"} to="/my-profile">My Profile</Link>
 									</li>
@@ -174,10 +179,10 @@ class MainRouter extends Reflux.Component {
 							</div>
 						</div>
 					</nav>
-					
+
 					<div className="container">
 						<br />
-						{/*<Route exact path="/" component={Homepage} />*/}					
+						{/*<Route exact path="/" component={Homepage} />*/}
 						<PropsRoute path='/' component={Homepage} axiosParams={this.getCustomAxiosParams()} exactPath={true} />
 						<Route exact path="/login" component={Login}/>
 						<Route exact path="/affinities" component={Affinities}/>
@@ -191,6 +196,8 @@ class MainRouter extends Reflux.Component {
 						<Route exact path="/events" component={Events}/>
 						<Route exact path="/dislikes" component={Dislikes}/>
 						<Route exact path="/search" component={Search}/>
+						<Route exact path="/daily-meet" component={DailyMeet}/>
+                        <Route exact path="/error" component={Error}/>
 						<Route path="/topics" component={Topics}/>
 					</div>
 

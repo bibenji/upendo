@@ -9,14 +9,15 @@ use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Upendo\Filter\UsersFilter;
 
 /**  
  * @ApiResource(attributes={
- * 		"normalization_context"={"groups"={"user"}}, 
- * 		"denormalization_context"={"groups"={"user"}}, 
- * 		"filters"={"users_filter"}
+ * 		"normalization_context"={"groups"={"user"}},
+ * 		"denormalization_context"={"groups"={"user"}},
+ * 		"filters"={UsersFilter::class}
  * })
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Upendo\Repository\CustomUserRepository")
  * @ORM\Table(name="users")
  */ 
 class User implements UserInterface
@@ -30,14 +31,14 @@ class User implements UserInterface
      * @var string
 	 * @ORM\Column(type="string")
      * @ORM\Id
-	 * @Groups({"user", "relation", "conversation", "message"})
+	 * @Groups({"user", "relation", "conversation", "message", "daily_profile", "daily_user"})
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(name="username", type="string")
-	 * @Groups({"user", "conversation", "message", "event"})
+	 * @Groups({"user", "conversation", "message", "event", "daily_profile", "daily_user"})
      */
     protected $username;
 
@@ -55,7 +56,7 @@ class User implements UserInterface
 	protected $password;
 	
 	/**
-     * @var string
+     * @var null|string
 	 * @Groups({"user"})
 	 */
 	protected $plainPassword;
@@ -102,7 +103,7 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="user")
-	 * @Groups({"user", "conversation"})
+	 * @Groups({"user", "conversation", "daily_user"})
      */
     protected $photos;
 	
@@ -121,11 +122,26 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="Relation", mappedBy="userTwo")	 
      */
     protected $relationsAsTwo;
+
+    /**
+     * @Groups({"user"})
+     */
+    protected $relations;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DailyProfile", mappedBy="userOne")
+     */
+    protected $dailyProfileAsOne;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DailyProfile", mappedBy="userTwo")
+     */
+    protected $dailyProfileAsTwo;
 	
 	/**     
 	 * @Groups({"user"})
      */
-	protected $relations;
+	protected $dailyProfiles;
 		
 	/**
 	 * @var string
@@ -159,7 +175,10 @@ class User implements UserInterface
 		$this->roles = [self::ROLE_DEFAULT];	
 		$this->relationsAsOne = new ArrayCollection(); 
 		$this->relationsAsTwo = new ArrayCollection(); 		
-		// $this->relations = new ArrayCollection(); 		
+		// $this->relations = new ArrayCollection();
+		$this->dailyProfileAsOne = new ArrayCollection();
+		$this->dailyProfileAsTwo = new ArrayCollection();
+		// $this->dailyProfiles = new ArrayCollection();
 		$this->conversations = new ArrayCollection(); 		
 		$this->messagesSent = new ArrayCollection(); 		
 		$this->participations = new ArrayCollection();
@@ -471,7 +490,49 @@ class User implements UserInterface
 		
 		return $relations;
 	}
-		
+
+	public function getDailyProfileAsOne()
+	{
+		return $this->dailyProfileAsOne;
+	}
+
+	public function setDailyProfileAsOne($dailyProfileAsOne)
+	{
+		$this->dailyProfileAsOne = $dailyProfileAsOne;
+	}
+
+    public function getDailyProfileAsTwo()
+    {
+        return $this->dailyProfileAsTwo;
+    }
+
+    public function setDailyProfileAsTwo($dailyProfileAsTwo)
+    {
+        $this->dailyProfileAsTwo = $dailyProfileAsTwo;
+    }
+
+	public function getDailyProfiles()
+	{
+		$dailyProfiles = [];
+
+		$allDailyProfiles = array_merge($this->dailyProfileAsOne->toArray(), $this->dailyProfileAsTwo->toArray());
+
+		foreach ($allDailyProfiles as $dailyProfile) {
+		    /** @var DailyProfile $dailyProfile */
+			$currentUser = ($dailyProfile->getUserOne()->getId() === $this->id ? $dailyProfile->getUserOne() : $dailyProfile->getUserTwo());
+			$otherUser = ($dailyProfile->getUserOne()->getId() !== $this->id ? $dailyProfile->getUserOne() : $dailyProfile->getUserTwo());
+			$index = $otherUser->getId();
+            $dailyProfiles[$index] = [
+				'id' => $dailyProfile->getId(),
+				'date' => $dailyProfile->getDate(),
+				'currentUser' => $currentUser,
+				'otherUser' => $otherUser,
+			];
+		}
+
+		return $dailyProfiles;
+	}
+
     /**
      * @return ArrayCollection
      */
@@ -534,6 +595,29 @@ class User implements UserInterface
     public function addParticipation(Event $participation)
     {
         $this->participations[] = $participation;
+    }
+
+    /**
+     * @return mixed|null
+     * @Groups({"user", "conversation", "message", "event", "daily_profile", "daily_user"})
+     */
+    public function getMainPhoto()
+    {
+        $mainPhoto = null;
+
+        if ($this->photos->count() !== 0) {
+            foreach ($this->photos as $photo) {
+                if ($photo->isMain()) {
+                    $mainPhoto = $photo;
+                }
+            }
+
+            if ($mainPhoto === null) {
+                $mainPhoto = $this->photos->get(0);
+            }
+        }
+
+        return $mainPhoto;
     }
 	
     public function getSalt()

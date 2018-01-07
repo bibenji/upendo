@@ -27,7 +27,7 @@ class Photo
     /**
      * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user", "conversation"})
+	 * @Groups({"user", "conversation", "daily_user"})
      */
     protected $path;			
 
@@ -36,6 +36,13 @@ class Photo
      * @ORM\ManyToOne(targetEntity="User", inversedBy="photos")
      */
     protected $user;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean", options={"default" : 0})
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="photos")
+     */
+    protected $main = false;
 
     public function __construct()
     {
@@ -88,5 +95,21 @@ class Photo
     public function setUser(User $user)
     {
         $this->user = $user;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMain(): bool
+    {
+        return $this->main;
+    }
+
+    /**
+     * @param bool $main
+     */
+    public function setMain(bool $main): void
+    {
+        $this->main = $main;
     }
 }

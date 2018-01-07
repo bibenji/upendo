@@ -20,3 +20,13 @@ file_upload:
     path: /upload
     defaults:
         _controller: Upendo\Controller\FileController::uploadAction
+
+daily_profile:
+    path: /daily_profile
+    defaults:
+        _controller: Upendo\Controller\UserController::dailyProfileAction
+
+contacts_list:
+    path: /contacts_list
+    defaults:
+        _controller: Upendo\Controller\UserController::getContactsAction

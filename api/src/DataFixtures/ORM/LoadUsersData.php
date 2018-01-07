@@ -5,7 +5,7 @@ namespace Upendo\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\User;
+use Upendo\Entity\User;
 
 class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -14,7 +14,7 @@ class LoadUsersData extends AbstractFixture implements OrderedFixtureInterface
         $faker = \Faker\Factory::create('fr_FR');
 		
 		for ($i=0; $i < 9; $i++) {
-			$user = new User();			
+			$user = new User();
 						
 			$user->setUsername($faker->userName());
 			$user->setGender($faker->randomElement([User::GENDER_MAN, User::GENDER_WOMAN]));
