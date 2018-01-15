@@ -34,7 +34,7 @@ final class UsersFilter extends AbstractFilter
 		}
 
 		/** @var User $user */
-		$user = $this->tokenStorage->getToken()->getUser();				
+		$user = $this->tokenStorage->getToken()->getUser();
 
 		if ($user === 'anon.') { // ne doit jamais arriver
 		    return;
@@ -55,35 +55,35 @@ final class UsersFilter extends AbstractFilter
 			if ($searchingGender !== Profile::SEARCHING_BOTH) {
 				$queryBuilder
 					->andWhere('u.gender = :gender')
-					->setParameter('gender', $searchingGender)				
-				;			
-			}			
+					->setParameter('gender', $searchingGender)
+				;
+			}
 		}
-		
+
 		if ($user->getProfile()->getSearchingAgeMin()) {
-			$now = new \DateTime();								
-			$intervalMin = new \DateInterval('P' . $user->getProfile()->getSearchingAgeMin() . 'Y');		
+			$now = new \DateTime();
+			$intervalMin = new \DateInterval('P' . $user->getProfile()->getSearchingAgeMin() . 'Y');
 			$minBirthdate = $now->sub($intervalMin);
-			
+
 			$queryBuilder
-				->andWhere('p.birthdate <= :minBirthdate')			
+				->andWhere('p.birthdate <= :minBirthdate')
 				->setParameter('minBirthdate', $minBirthdate)
-			;			
+			;
 		}
-		
+
 		if ($user->getProfile()->getSearchingAgeMax()) {
 			$now = new \DateTime();
 			$intervalMax = new \DateInterval('P' . $user->getProfile()->getSearchingAgeMax() . 'Y');
 			$maxBirthdate = $now->sub($intervalMax);
-			
+
 			$queryBuilder
 				->andWhere('p.birthdate >= :maxBirthdate')
 				->setParameter('maxBirthdate', $maxBirthdate)
-			;			
-		}			
+			;
+		}
 
 		$queryBuilder
-			->andWhere($queryBuilder->expr()->orX(				
+			->andWhere($queryBuilder->expr()->orX(
 				// soit rao a un status like et l'utilisateur courant n'est pas le dernier a avoir liké
 				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->eq('rao.status', ':likedStatus'),
@@ -92,16 +92,16 @@ final class UsersFilter extends AbstractFilter
 				// soit rat a un status like et l'utilisateur courant n'est pas le dernier a avoir liké
 				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->eq('rat.status', ':likedStatus'),
-					$queryBuilder->expr()->neq('rat.lastActionUserId', ':lastActionUserId')					
-				),		
+					$queryBuilder->expr()->neq('rat.lastActionUserId', ':lastActionUserId')
+				),
 				// soit ni rao ni rat n'a encore été défini
 				$queryBuilder->expr()->andX(
 					$queryBuilder->expr()->isNull('rao.status'),
 					$queryBuilder->expr()->isNull('rat.status')
 				)
-			))			
+			))
 			->setParameter('likedStatus', "1")
-			->setParameter('lastActionUserId', $user->getId())			
+			->setParameter('lastActionUserId', $user->getId())
 		;
     }
 

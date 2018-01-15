@@ -14,9 +14,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false                
 
-#        debug:
-#              pattern: ^/(debug/*|contacts_list)
-#              anonymous: ~
+        debug:
+              pattern: ^/debug
+              anonymous: ~
 
         api:
             pattern: ^/

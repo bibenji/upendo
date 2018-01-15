@@ -78,4 +78,9 @@ class UserController extends Controller
 
         return new JsonResponse($this->serializeEntity($results, ['daily_user']));
     }
+
+    public function getDislikedProfiles()
+    {
+        dump('coucou les genoux !'); exit;
+    }
 }

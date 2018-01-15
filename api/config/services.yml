@@ -30,6 +30,9 @@ services:
         arguments: [ '@doctrine', '@request_stack', '@logger', '@security.token_storage' ]
         tags: ['api_platform.filter']
 
+    'Upendo\Filter\RelationsFilter':
+        arguments: [ '@doctrine', '@request_stack', '@logger', '@security.token_storage' ]
+        tags: ['api_platform.filter']
 
     # doctrine subscribers
     'Upendo\EventSubscriber\DoctrineEventSubscriber':

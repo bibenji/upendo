@@ -30,3 +30,8 @@ contacts_list:
     path: /contacts_list
     defaults:
         _controller: Upendo\Controller\UserController::getContactsAction
+
+debug:
+    path: /debug
+    defaults:
+        _controller: Upendo\Controller\DebugController::debugAction

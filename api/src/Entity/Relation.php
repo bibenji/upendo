@@ -3,14 +3,17 @@
 namespace Upendo\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Upendo\Filter\RelationsFilter;
 
 /**  
- * @ApiResource()
+ * @ApiResource(attributes={
+ * 		"normalization_context"={"groups"={"relation"}},
+ * 		"denormalization_context"={"groups"={"relation"}},
+ * 		"filters"={RelationsFilter::class}
+ * })
  * @ORM\Entity()
  * @ORM\Table(name="relation")
  */
@@ -24,33 +27,35 @@ class Relation
      * @var string
      * @ORM\Id
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+	 * @Groups({"user", "relation"})
      */
     protected $id;
 	
 	/**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="relationsAsOne")	 
 	 * @ORM\JoinColumn(name="user_one_id", referencedColumnName="id")
+     * @Groups({"relation"})
      */
     protected $userOne;
 	
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="relationsAsTwo")	 
 	 * @ORM\JoinColumn(name="user_two_id", referencedColumnName="id")
+     * @Groups({"relation"})
      */
     protected $userTwo;
 	
 	/**
 	 * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+	 * @Groups({"user", "relation"})
 	 */
 	protected $lastActionUserId;
 	
 	/**
 	 * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+	 * @Groups({"user", "relation"})
 	 */
 	protected $status;
 

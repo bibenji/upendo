@@ -38,7 +38,7 @@ class User implements UserInterface
     /**
      * @var string
      * @ORM\Column(name="username", type="string")
-	 * @Groups({"user", "conversation", "message", "event", "daily_profile", "daily_user"})
+	 * @Groups({"user", "relation", "conversation", "message", "event", "daily_profile", "daily_user"})
      */
     protected $username;
 
@@ -103,13 +103,13 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="user")
-	 * @Groups({"user", "conversation", "daily_user"})
+	 * @Groups({"user", "relation", "conversation", "daily_user"})
      */
     protected $photos;
 	
 	/**	 
      * @ORM\OneToOne(targetEntity="Profile", mappedBy="user", cascade={"all"})
-	 * @Groups({"user"})
+	 * @Groups({"user", "relation"})
      */
     protected $profile;
 	
@@ -599,7 +599,7 @@ class User implements UserInterface
 
     /**
      * @return mixed|null
-     * @Groups({"user", "conversation", "message", "event", "daily_profile", "daily_user"})
+     * @Groups({"user", "relation", "conversation", "message", "event", "daily_profile", "daily_user"})
      */
     public function getMainPhoto()
     {
