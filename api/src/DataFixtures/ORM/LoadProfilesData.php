@@ -11,31 +11,31 @@ class LoadProfilesData extends AbstractFixture implements OrderedFixtureInterfac
 {
     public function load(ObjectManager $manager)
     {
-		$faker = \Faker\Factory::create('fr_FR');
-		
-		for ($i=0; $i < 10; $i++) {
-			$profile = new Profile();			
-			
-			$profile->setUser($this->getReference('user'.$i));
-			
-			$searchingGender = $faker->randomElement([Profile::SEARCHING_MEN, Profile::SEARCHING_WOMEN, Profile::SEARCHING_BOTH]);
-			$profile->setSearchingGender($searchingGender);
-			
-			$profile->setBirthdate($faker->dateTimeThisCentury());
-			$profile->setWeight($faker->numberBetween(45, 100));
-			$profile->setSize($faker->numberBetween(140, 200));
-	
-			$eyesColor = $faker->randomElement([Profile::EYES_BLUE, Profile::EYES_BROWN, Profile::EYES_GRAY, Profile::EYES_GREEN]);
-			$profile->setEyesColor($eyesColor);
-			
-			$hairColor = $faker->randomElement([Profile::HAIR_BLACK, Profile::HAIR_BROWN, Profile::HAIR_BLOND, Profile::HAIR_AUBURN, Profile::HAIR_RED]);
-			$profile->setHairColor($hairColor);
-			
-			$profile->setDescription($faker->realText(300, 2));
+        $faker = \Faker\Factory::create('fr_FR');
+        
+        for ($i=0; $i < 10; $i++) {
+            $profile = new Profile();
+            
+            $profile->setUser($this->getReference('user'.$i));
+            
+            $searchingGender = $faker->randomElement([Profile::SEARCHING_MEN, Profile::SEARCHING_WOMEN, Profile::SEARCHING_BOTH]);
+            $profile->setSearchingGender($searchingGender);
+            
+            $profile->setBirthdate($faker->dateTimeThisCentury());
+            $profile->setWeight($faker->numberBetween(45, 100));
+            $profile->setSize($faker->numberBetween(140, 200));
+    
+            $eyesColor = $faker->randomElement([Profile::EYES_BLUE, Profile::EYES_BROWN, Profile::EYES_GRAY, Profile::EYES_GREEN]);
+            $profile->setEyesColor($eyesColor);
+            
+            $hairColor = $faker->randomElement([Profile::HAIR_BLACK, Profile::HAIR_BROWN, Profile::HAIR_BLOND, Profile::HAIR_AUBURN, Profile::HAIR_RED]);
+            $profile->setHairColor($hairColor);
+            
+            $profile->setDescription($faker->realText(300, 2));
 
-			$manager->persist($profile);			
-		}
-		
+            $manager->persist($profile);
+        }
+        
         $manager->flush();
     }
 

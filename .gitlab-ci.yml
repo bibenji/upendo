@@ -1,0 +1,36 @@
+stages:
+  - build
+  - test
+  - cleanup
+
+before_script:
+  - uname -a
+  - docker -v
+  - docker-compose -v
+
+build_connect:
+  stage: build
+  cache:
+    untracked: true
+    key: "$CI_COMMIT_REF_NAME_upendo"
+  script:
+      - cd $CI_PROJECT_DIR/api/
+      - docker run -t --rm -v /home/ikimea/.composer:/tmp -v $(pwd):/app -u 3000:3000 composer:latest composer install --ignore-platform-reqs --optimize-autoloader --prefer-dist --no-progress --no-scripts --no-dev
+      - cd $CI_PROJECT_DIR
+      - docker-compose -f docker-compose-build.yml build --pull
+
+test_upendo:
+  stage: test
+  script:
+    - cd $CI_PROJECT_DIR
+    - docker-compose -f docker-compose-tests.yml --project-name upendo_$CI_COMMIT_REF_SLUG down --volumes --remove-orphans
+    - docker-compose -f docker-compose-tests.yml --project-name upendo_$CI_COMMIT_REF_SLUG run --rm php sh build-test.sh
+    - docker-compose -f docker-compose-tests.yml --project-name upendo_$CI_COMMIT_REF_SLUG down --remove-orphans
+
+cleanup:
+  stage: cleanup
+  script:
+    - cd $CI_PROJECT_DIR
+    - docker-compose -f docker-compose-tests.yml --project-name upendo_$CI_COMMIT_REF_SLUG down --remove-orphans
+
+  when: on_failure

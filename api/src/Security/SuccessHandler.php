@@ -21,7 +21,7 @@ class SuccessHandler implements AuthenticationSuccessHandlerInterface
     protected $em;
 
     public function __construct(EntityManager $em)
-    {       
+    {
         $this->em = $em;
     }
 
@@ -32,17 +32,17 @@ class SuccessHandler implements AuthenticationSuccessHandlerInterface
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-		$apikey = str_replace('-', '', Uuid::uuid4()->toString());
-		
-		$user = $token->getUser();
-		$user->setApikey($apikey);
-		$this->em->persist($user);
-		$this->em->flush();
-		
-		$response = new JsonResponse(array(
-			'apikey' => $apikey,
-			'id' => $user->getId()
-		));
+        $apikey = str_replace('-', '', Uuid::uuid4()->toString());
+        
+        $user = $token->getUser();
+        $user->setApikey($apikey);
+        $this->em->persist($user);
+        $this->em->flush();
+        
+        $response = new JsonResponse(array(
+            'apikey' => $apikey,
+            'id' => $user->getId()
+        ));
         return $response;
     }
 }

@@ -26,7 +26,7 @@ class Kernel extends BaseKernel
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
             $bundles[] = new \Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-			$bundles[] = new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
+            $bundles[] = new \Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
 
         return $bundles;

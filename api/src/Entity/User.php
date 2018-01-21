@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Upendo\Filter\UsersFilter;
 
-/**  
+/**
  * @ApiResource(attributes={
  * 		"normalization_context"={"groups"={"user"}},
  * 		"denormalization_context"={"groups"={"user"}},
@@ -19,107 +19,107 @@ use Upendo\Filter\UsersFilter;
  * })
  * @ORM\Entity(repositoryClass="Upendo\Repository\CustomUserRepository")
  * @ORM\Table(name="users")
- */ 
+ */
 class User implements UserInterface
 {
-	const ROLE_DEFAULT = 'ROLE_USER';
-	 
-	const GENDER_MAN = 'M';
-	const GENDER_WOMAN = 'W';
+    const ROLE_DEFAULT = 'ROLE_USER';
+     
+    const GENDER_MAN = 'M';
+    const GENDER_WOMAN = 'W';
 
     /**
      * @var string
-	 * @ORM\Column(type="string")
+     * @ORM\Column(type="string")
      * @ORM\Id
-	 * @Groups({"user", "relation", "conversation", "message", "daily_profile", "daily_user"})
+     * @Groups({"user", "relation", "conversation", "message", "daily_profile", "daily_user"})
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(name="username", type="string")
-	 * @Groups({"user", "conversation", "message", "event", "daily_profile", "daily_user"})
+     * @Groups({"user", "conversation", "message", "event", "daily_profile", "daily_user"})
      */
     protected $username;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $email;
-	
-	/**
+    
+    /**
      * @var string
      * @ORM\Column(type="string")
      */
-	protected $password;
-	
-	/**
+    protected $password;
+    
+    /**
      * @var null|string
-	 * @Groups({"user"})
-	 */
-	protected $plainPassword;
-	
-	/**
-	 * @var string
-	 * @ORM\Column(type="string", nullable=true)
-	 */
-	protected $apikey;
-	
-	/**
-     * @var array
-     * @ORM\Column(type="json_array")	 
+     * @Groups({"user"})
      */
-	protected $roles;
-	
-	/**
+    protected $plainPassword;
+    
+    /**
+     * @var string
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $apikey;
+    
+    /**
+     * @var array
+     * @ORM\Column(type="json_array")
+     */
+    protected $roles;
+    
+    /**
      * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $gender;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $phone;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $firstname;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $lastname;
 
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="user")
-	 * @Groups({"user", "conversation", "daily_user"})
+     * @Groups({"user", "conversation", "daily_user"})
      */
     protected $photos;
-	
-	/**	 
+    
+    /**
      * @ORM\OneToOne(targetEntity="Profile", mappedBy="user", cascade={"all"})
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $profile;
-	
-	/**
-     * @ORM\OneToMany(targetEntity="Relation", mappedBy="userOne")	 
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Relation", mappedBy="userOne")
      */
     protected $relationsAsOne;
-	
-	/**
-     * @ORM\OneToMany(targetEntity="Relation", mappedBy="userTwo")	 
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Relation", mappedBy="userTwo")
      */
     protected $relationsAsTwo;
 
@@ -137,30 +137,30 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="DailyProfile", mappedBy="userTwo")
      */
     protected $dailyProfileAsTwo;
-	
-	/**     
-	 * @Groups({"user"})
+    
+    /**
+     * @Groups({"user"})
      */
-	protected $dailyProfiles;
-		
-	/**
-	 * @var string
+    protected $dailyProfiles;
+        
+    /**
+     * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
-	 */
-	protected $region;
-	
-	/**
-	 * @var Conversation
-	 * @ORM\ManyToMany(targetEntity="Conversation", inversedBy="users")
-	 */
-	protected $conversations;
-	
-	/**
-	 * @var Message
-	 * @ORM\OneToMany(targetEntity="Message", mappedBy="from")
-	 */
-	protected $messagesSent;
+     * @Groups({"user"})
+     */
+    protected $region;
+    
+    /**
+     * @var Conversation
+     * @ORM\ManyToMany(targetEntity="Conversation", inversedBy="users")
+     */
+    protected $conversations;
+    
+    /**
+     * @var Message
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="from")
+     */
+    protected $messagesSent;
 
     /**
      * @var Event
@@ -171,17 +171,17 @@ class User implements UserInterface
     public function __construct()
     {
         $this->id = Uuid::uuid4()->toString();
-        $this->photos = new ArrayCollection();         
-		$this->roles = [self::ROLE_DEFAULT];	
-		$this->relationsAsOne = new ArrayCollection(); 
-		$this->relationsAsTwo = new ArrayCollection(); 		
-		// $this->relations = new ArrayCollection();
-		$this->dailyProfileAsOne = new ArrayCollection();
-		$this->dailyProfileAsTwo = new ArrayCollection();
-		// $this->dailyProfiles = new ArrayCollection();
-		$this->conversations = new ArrayCollection(); 		
-		$this->messagesSent = new ArrayCollection(); 		
-		$this->participations = new ArrayCollection();
+        $this->photos = new ArrayCollection();
+        $this->roles = [self::ROLE_DEFAULT];
+        $this->relationsAsOne = new ArrayCollection();
+        $this->relationsAsTwo = new ArrayCollection();
+        // $this->relations = new ArrayCollection();
+        $this->dailyProfileAsOne = new ArrayCollection();
+        $this->dailyProfileAsTwo = new ArrayCollection();
+        // $this->dailyProfiles = new ArrayCollection();
+        $this->conversations = new ArrayCollection();
+        $this->messagesSent = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     /**
@@ -223,8 +223,8 @@ class User implements UserInterface
     {
         $this->email = $email;
     }
-	
-	/**
+    
+    /**
      * @return string
      */
     public function getPassword()
@@ -239,8 +239,8 @@ class User implements UserInterface
     {
         $this->password = $password;
     }
-	
-	/**
+    
+    /**
      * @return mixed
      */
     public function getPlainPassword()
@@ -255,8 +255,8 @@ class User implements UserInterface
     {
         $this->plainPassword = $plainPassword;
     }
-	
-	/**
+    
+    /**
      * @return string
      */
     public function getApikey()
@@ -271,11 +271,11 @@ class User implements UserInterface
     {
         $this->apikey = $apikey;
     }
-	
-	 /**
-     * @param $role
-     * @return $this
-     */
+    
+    /**
+    * @param $role
+    * @return $this
+    */
     public function addRole($role)
     {
         $this->roles[] = $role;
@@ -290,7 +290,7 @@ class User implements UserInterface
         if (null === $this->roles) {
             return ['ROLE_USER'];
         }
-		
+        
         return $this->roles;
     }
 
@@ -383,8 +383,8 @@ class User implements UserInterface
     {
         $this->photos = $photos;
     }
-	
-	/**
+    
+    /**
      * Set profile
      *
      * @param Profile $profile
@@ -393,7 +393,7 @@ class User implements UserInterface
      */
     public function setProfile($profile)
     {
-		$profile->setUser($this);
+        $profile->setUser($this);
         $this->profile = $profile;
 
         return $this;
@@ -408,8 +408,8 @@ class User implements UserInterface
     {
         return $this->profile;
     }
-	
-	/**
+    
+    /**
      * @return string
      */
     public function getRegion()
@@ -448,58 +448,58 @@ class User implements UserInterface
     {
         $this->photos->removeElement($photo);
     }
-	
-	public function getRelationsAsOne()
-	{		
-		return $this->relationsAsOne;
-	}
-	
-	public function setRelationsAsOne($relationsAsOne)
-	{
-		$this->relationsAsOne = $relationsAsOne;
-	}
-	
-	public function getRelationsAsTwo()
-	{		
-		return $this->relationsAsTwo;
-	}
-	
-	public function setRelationsAsTwo($relationsAsTwo)
-	{
-		$this->relationsAsTwo = $relationsAsTwo;
-	}
-	
-	public function getRelations()
-	{		
-		$relations = [];
-		
-		$allRelations = array_merge($this->relationsAsOne->toArray(), $this->relationsAsTwo->toArray());
-				
-		foreach ($allRelations as $relation) {
-			$currentUser = ($relation->getUserOne()->getId() === $this->id ? $relation->getUserOne() : $relation->getUserTwo());			
-			$otherUser = ($relation->getUserOne()->getId() !== $this->id ? $relation->getUserOne() : $relation->getUserTwo());			
-			$index = $otherUser->getId();
-			$relations[$index] = [
-				'id' => $relation->getId(),				
-				'lastActionUserId' => $relation->getLastActionUserId(),
-				'status' => $relation->getStatus(),
-				'currentUser' => $currentUser,
-				'otherUser' => $otherUser,								
-			];			
-		}
-		
-		return $relations;
-	}
+    
+    public function getRelationsAsOne()
+    {
+        return $this->relationsAsOne;
+    }
+    
+    public function setRelationsAsOne($relationsAsOne)
+    {
+        $this->relationsAsOne = $relationsAsOne;
+    }
+    
+    public function getRelationsAsTwo()
+    {
+        return $this->relationsAsTwo;
+    }
+    
+    public function setRelationsAsTwo($relationsAsTwo)
+    {
+        $this->relationsAsTwo = $relationsAsTwo;
+    }
+    
+    public function getRelations()
+    {
+        $relations = [];
+        
+        $allRelations = array_merge($this->relationsAsOne->toArray(), $this->relationsAsTwo->toArray());
+                
+        foreach ($allRelations as $relation) {
+            $currentUser = ($relation->getUserOne()->getId() === $this->id ? $relation->getUserOne() : $relation->getUserTwo());
+            $otherUser = ($relation->getUserOne()->getId() !== $this->id ? $relation->getUserOne() : $relation->getUserTwo());
+            $index = $otherUser->getId();
+            $relations[$index] = [
+                'id' => $relation->getId(),
+                'lastActionUserId' => $relation->getLastActionUserId(),
+                'status' => $relation->getStatus(),
+                'currentUser' => $currentUser,
+                'otherUser' => $otherUser,
+            ];
+        }
+        
+        return $relations;
+    }
 
-	public function getDailyProfileAsOne()
-	{
-		return $this->dailyProfileAsOne;
-	}
+    public function getDailyProfileAsOne()
+    {
+        return $this->dailyProfileAsOne;
+    }
 
-	public function setDailyProfileAsOne($dailyProfileAsOne)
-	{
-		$this->dailyProfileAsOne = $dailyProfileAsOne;
-	}
+    public function setDailyProfileAsOne($dailyProfileAsOne)
+    {
+        $this->dailyProfileAsOne = $dailyProfileAsOne;
+    }
 
     public function getDailyProfileAsTwo()
     {
@@ -511,27 +511,27 @@ class User implements UserInterface
         $this->dailyProfileAsTwo = $dailyProfileAsTwo;
     }
 
-	public function getDailyProfiles()
-	{
-		$dailyProfiles = [];
+    public function getDailyProfiles()
+    {
+        $dailyProfiles = [];
 
-		$allDailyProfiles = array_merge($this->dailyProfileAsOne->toArray(), $this->dailyProfileAsTwo->toArray());
+        $allDailyProfiles = array_merge($this->dailyProfileAsOne->toArray(), $this->dailyProfileAsTwo->toArray());
 
-		foreach ($allDailyProfiles as $dailyProfile) {
-		    /** @var DailyProfile $dailyProfile */
-			$currentUser = ($dailyProfile->getUserOne()->getId() === $this->id ? $dailyProfile->getUserOne() : $dailyProfile->getUserTwo());
-			$otherUser = ($dailyProfile->getUserOne()->getId() !== $this->id ? $dailyProfile->getUserOne() : $dailyProfile->getUserTwo());
-			$index = $otherUser->getId();
+        foreach ($allDailyProfiles as $dailyProfile) {
+            /** @var DailyProfile $dailyProfile */
+            $currentUser = ($dailyProfile->getUserOne()->getId() === $this->id ? $dailyProfile->getUserOne() : $dailyProfile->getUserTwo());
+            $otherUser = ($dailyProfile->getUserOne()->getId() !== $this->id ? $dailyProfile->getUserOne() : $dailyProfile->getUserTwo());
+            $index = $otherUser->getId();
             $dailyProfiles[$index] = [
-				'id' => $dailyProfile->getId(),
-				'date' => $dailyProfile->getDate(),
-				'currentUser' => $currentUser,
-				'otherUser' => $otherUser,
-			];
-		}
+                'id' => $dailyProfile->getId(),
+                'date' => $dailyProfile->getDate(),
+                'currentUser' => $currentUser,
+                'otherUser' => $otherUser,
+            ];
+        }
 
-		return $dailyProfiles;
-	}
+        return $dailyProfiles;
+    }
 
     /**
      * @return ArrayCollection
@@ -548,15 +548,15 @@ class User implements UserInterface
     {
         $this->conversations = $conversations;
     }
-	
-	/**
-	 * @param Conversation $conversation
-	 */
-	public function addConversation(Conversation $conversation)
-	{
-		$this->conversations[] = $conversation;
-	}
-		
+    
+    /**
+     * @param Conversation $conversation
+     */
+    public function addConversation(Conversation $conversation)
+    {
+        $this->conversations[] = $conversation;
+    }
+        
     /**
      * @return ArrayCollection
      */
@@ -619,13 +619,13 @@ class User implements UserInterface
 
         return $mainPhoto;
     }
-	
+    
     public function getSalt()
     {
         // return $this->salt;
     }
-	
-	public function eraseCredentials()
+    
+    public function eraseCredentials()
     {
     }
 }

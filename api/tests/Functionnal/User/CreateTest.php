@@ -1,8 +1,13 @@
 <?php
 
-namespace Upendo\Test\Functionnal\User;
+namespace Upendo\Tests\Functionnal\User;
 
-class CreateTest extends TestCase
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class CreateTest extends WebTestCase
 {
-
+    public function testCreateSimple()
+    {
+        $this->markTestSkipped();
+    }
 }

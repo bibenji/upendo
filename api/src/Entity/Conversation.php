@@ -12,7 +12,7 @@ use Upendo\Filter\ConversationFromContactFilter;
 
 /**
  * @ApiResource(attributes={
- * 		"normalization_context"={"groups"={"conversation"}}, 
+ * 		"normalization_context"={"groups"={"conversation"}},
  * 		"denormalization_context"={"groups"={"conversation"}},
  *      "filters"={
  *          "messages.order",
@@ -28,33 +28,33 @@ class Conversation
      * @var string
      * @ORM\Id
      * @ORM\Column(type="string")
-	 * @Groups({"user", "conversation"})
+     * @Groups({"user", "conversation"})
      */
     protected $id;
 
-    /**     
+    /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="conversations")
-	 * @Groups({"conversation"})
+     * @Groups({"conversation"})
      */
     protected $users;
-	
-	/**     
+    
+    /**
      * @ORM\OneToMany(targetEntity="Message", mappedBy="conversation")
-	 * @Groups({"conversation"})
+     * @Groups({"conversation"})
      */
     protected $messages;
-	
-	/**
-	 * @var Message	 
-	 * @Groups({"conversation"})
-	 */
-	protected $lastMessage;
+    
+    /**
+     * @var Message
+     * @Groups({"conversation"})
+     */
+    protected $lastMessage;
 
     public function __construct()
     {
         $this->id = Uuid::uuid4()->toString();
-		$this->users = new ArrayCollection();
-		$this->messages = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     /**
@@ -77,20 +77,20 @@ class Conversation
      * @param Collection $users
      */
     public function setUsers(Collection $users)
-    {		
+    {
         $this->users = $users;
     }
-	
-	/**
-	 * @param User
-	 */
-	public function addUser(User $user)
-	{
-		$user->addConversation($this);
-		$this->users[] = $user;		
-	}
-	
-	/**
+    
+    /**
+     * @param User
+     */
+    public function addUser(User $user)
+    {
+        $user->addConversation($this);
+        $this->users[] = $user;
+    }
+    
+    /**
      * @return ArrayCollection
      */
     public function getMessages()
@@ -105,15 +105,15 @@ class Conversation
     {
         $this->messages = $messages;
     }
-	
-	public function setLastMessage($lastMessage)
-	{
-		// TODO : see if it's usefull
-	}
-	
-	public function getLastMessage()
-	{
-	    //$this->messages-
-		return $this->messages->get(count($this->messages)-1);		
-	}
+    
+    public function setLastMessage($lastMessage)
+    {
+        // TODO : see if it's usefull
+    }
+    
+    public function getLastMessage()
+    {
+        //$this->messages-
+        return $this->messages->get(count($this->messages)-1);
+    }
 }
