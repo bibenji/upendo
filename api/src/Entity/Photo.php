@@ -20,16 +20,16 @@ class Photo
      * @var string
      * @ORM\Id
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user", "conversation", "daily_user"})
+     * @Groups({"user", "conversation", "daily_user"})
      */
-    protected $path;			
+    protected $path;
 
     /**
      * @var User

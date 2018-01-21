@@ -70,7 +70,7 @@ class Event
 
     public function __construct()
     {
-         $this->id = Uuid::uuid4()->toString();
+        $this->id = Uuid::uuid4()->toString();
         $this->participants = new ArrayCollection();
     }
 
@@ -183,7 +183,8 @@ class Event
         }
     }
 
-    private function hasParticipant($participant) {
+    private function hasParticipant($participant)
+    {
         foreach ($this->participants as $oneParticipant) {
             if ($oneParticipant->getId() === $participant->getId()) {
                 return true;

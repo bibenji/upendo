@@ -12,39 +12,39 @@ use Doctrine\ORM\EntityManager;
 
 class UserProvider implements UserProviderInterface
 {
-	protected $em;
-	
-	public function __construct(EntityManager $entityManager)
-	{
-		$this->em = $entityManager;
-	}
-	
-	public function getUsernameForApiKey($apiKey)
+    protected $em;
+    
+    public function __construct(EntityManager $entityManager)
     {
-		if($apiKey === 'lhommealabananedor') {			
-			$user = $this->em->getRepository('Upendo:User')->findOneBy(['username' => 'bibenji']);
-		} else {			
-			$user = $this->em->getRepository('Upendo:User')->findOneBy(['apikey' => $apiKey]);
-		}
-		
-		if (null === $user) {
-			return;
-        }		
+        $this->em = $entityManager;
+    }
+    
+    public function getUsernameForApiKey($apiKey)
+    {
+        if ($apiKey === 'lhommealabananedor') {
+            $user = $this->em->getRepository('Upendo:User')->findOneBy(['username' => 'bibenji']);
+        } else {
+            $user = $this->em->getRepository('Upendo:User')->findOneBy(['apikey' => $apiKey]);
+        }
+        
+        if (null === $user) {
+            return;
+        }
         
         return $username = $user->getUsername();
     }
-	
+    
     public function loadUserByUsername($username)
     {
         $user = $this->em->getRepository('Upendo:User')->findOneBy(['username' => $username]);
         
-		if (null === $user) {
-			throw new UsernameNotFoundException(
-				sprintf('Username "%s" does not exist.', $username)
-			);
-		}
-		
-		return $user;        
+        if (null === $user) {
+            throw new UsernameNotFoundException(
+                sprintf('Username "%s" does not exist.', $username)
+            );
+        }
+        
+        return $user;
     }
 
     public function refreshUser(UserInterface $user)

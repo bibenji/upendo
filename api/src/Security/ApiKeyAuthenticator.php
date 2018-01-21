@@ -14,9 +14,9 @@ use Symfony\Component\Security\Http\Authentication\SimplePreAuthenticatorInterfa
 class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
 {
     public function createToken(Request $request, $providerKey)
-    {        
+    {
         $apiKey = $request->query->get('apikey') ? $request->query->get('apikey') : $request->headers->get('apikey');
-		
+        
         if (!$apiKey) {
             throw new BadCredentialsException();
         }
@@ -46,14 +46,14 @@ class ApiKeyAuthenticator implements SimplePreAuthenticatorInterface
         }
 
         $apiKey = $token->getCredentials();
-        $username = $userProvider->getUsernameForApiKey($apiKey);		
-				
-        if (!$username) {            
+        $username = $userProvider->getUsernameForApiKey($apiKey);
+                
+        if (!$username) {
             throw new CustomUserMessageAuthenticationException(
                 sprintf('API Key "%s" does not exist.', $apiKey)
             );
         }
-		
+        
         $user = $userProvider->loadUserByUsername($username);
 
         return new PreAuthenticatedToken(

@@ -9,50 +9,50 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**  
+/**
  * @ApiResource()
  * @ORM\Entity()
  * @ORM\Table(name="relation")
  */
 class Relation
-{	
-	const STATUS_ONE_LIKE = "1";
-	const STATUS_BOTH_LIKE = "2";	
-	const STATUS_ONE_DISLIKE = "3";
-	
+{
+    const STATUS_ONE_LIKE = "1";
+    const STATUS_BOTH_LIKE = "2";
+    const STATUS_ONE_DISLIKE = "3";
+    
     /**
      * @var string
      * @ORM\Id
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $id;
-	
-	/**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="relationsAsOne")	 
-	 * @ORM\JoinColumn(name="user_one_id", referencedColumnName="id")
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="relationsAsOne")
+     * @ORM\JoinColumn(name="user_one_id", referencedColumnName="id")
      */
     protected $userOne;
-	
+    
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="relationsAsTwo")	 
-	 * @ORM\JoinColumn(name="user_two_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="relationsAsTwo")
+     * @ORM\JoinColumn(name="user_two_id", referencedColumnName="id")
      */
     protected $userTwo;
-	
-	/**
-	 * @var string
+    
+    /**
+     * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
-	 */
-	protected $lastActionUserId;
-	
-	/**
-	 * @var string
+     * @Groups({"user"})
+     */
+    protected $lastActionUserId;
+    
+    /**
+     * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
-	 */
-	protected $status;
+     * @Groups({"user"})
+     */
+    protected $status;
 
     public function __construct()
     {
@@ -72,7 +72,7 @@ class Relation
      */
     // public function setId(string $id)
     // {
-        // $this->id = $id;
+    // $this->id = $id;
     // }
 
     /**
@@ -90,8 +90,8 @@ class Relation
     {
         $this->lastActionUserId = $lastActionUserId;
     }
-	
-	/**
+    
+    /**
      * @return string
      */
     public function getStatus()
@@ -106,40 +106,40 @@ class Relation
     {
         $this->status = $status;
     }
-	
-	/**
+    
+    /**
      * @return User
      */
     public function getUserOne()
-    {		
+    {
         return $this->userOne;
     }
 
     /**
      * @param User $userOne
-	 * @return Profile
+     * @return Profile
      */
     public function setUserOne(User $userOne)
     {
         $this->userOne = $userOne;
-		return $this;
+        return $this;
     }
-	
+    
     /**
      * @return User
      */
     public function getUserTwo()
-    {		
+    {
         return $this->userTwo;
     }
 
     /**
      * @param User $userTwo
-	 * @return Profile
+     * @return Profile
      */
     public function setUserTwo(User $userTwo)
     {
         $this->userTwo = $userTwo;
-		return $this;
+        return $this;
     }
 }

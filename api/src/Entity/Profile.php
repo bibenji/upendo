@@ -11,110 +11,110 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource()
  * @ORM\Entity()
- * @ORM\Table(name="profile") 
+ * @ORM\Table(name="profile")
  */
 class Profile
 {
-	const SEARCHING_MEN = 'M';
-	const SEARCHING_WOMEN = 'W';
-	const SEARCHING_BOTH = 'B';
-	
-	const EYES_BLUE = 'blue';
-	const EYES_BROWN = 'brown';
-	const EYES_GRAY = 'gray';
-	const EYES_GREEN = 'green';
-	
-	const HAIR_BLACK = 'black';
-	const HAIR_BROWN = 'brown';
-	const HAIR_BLOND = 'blond';
-	const HAIR_AUBURN = 'auburn';
-	const HAIR_RED = 'red';
-	
+    const SEARCHING_MEN = 'M';
+    const SEARCHING_WOMEN = 'W';
+    const SEARCHING_BOTH = 'B';
+    
+    const EYES_BLUE = 'blue';
+    const EYES_BROWN = 'brown';
+    const EYES_GRAY = 'gray';
+    const EYES_GREEN = 'green';
+    
+    const HAIR_BLACK = 'black';
+    const HAIR_BROWN = 'brown';
+    const HAIR_BLOND = 'blond';
+    const HAIR_AUBURN = 'auburn';
+    const HAIR_RED = 'red';
+    
     /**
      * @var string
      * @ORM\Column(type="string")
      * @ORM\Id
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $id;
-	
-	/**     
+    
+    /**
      * @ORM\OneToOne(targetEntity="User", inversedBy="profile")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")	 
-     */    
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
     private $user;
-		
-	/**
+        
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetimetz")
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
-	protected $birthdate;
-		
-	/**
+    protected $birthdate;
+        
+    /**
      * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"user"})
+     * @Groups({"user"})
      * @Assert\Choice(callback = "getGenres")
      */
     protected $searchingGender;
-	
-	/**
+    
+    /**
      * @var int
      * @ORM\Column(type="integer", nullable=true)
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $searchingAgeMin;
-	
-	/**
+    
+    /**
      * @var int
      * @ORM\Column(type="integer", nullable=true)
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $searchingAgeMax;
-	
-	/**
+    
+    /**
      * @var int
      * @ORM\Column(type="integer", nullable=true)
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $weight;
-	
-	/**
+    
+    /**
      * @var int
      * @ORM\Column(type="integer", nullable=true)
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $size;
-	
-	/**
+    
+    /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
-	 * @Groups({"user"})
+     * @Groups({"user"})
      * @Assert\Choice(callback = "getEyesColors")
      */
     protected $eyesColor;
-	
-	/**
+    
+    /**
      * @var string
      * @ORM\Column(type="string", nullable=true)
-	 * @Groups({"user"})
+     * @Groups({"user"})
      * @Assert\Choice(callback = "getHairColors")
      */
     protected $hairColor;
-	
-	/**
+    
+    /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
-	 * @Groups({"user"})
+     * @Groups({"user"})
      */
     protected $description;
-	
-	/**
-	 * @var array
+    
+    /**
+     * @var array
      * @ORM\Column(type="array")
-	 * @Assert\Collection(
-     *     fields = {	 
+     * @Assert\Collection(
+     *     fields = {
      *         "music" = @Assert\Type(type="string"),
      *         "cinema" = @Assert\Type(type="string"),
      *         "books" = @Assert\Type(type="string"),
@@ -124,39 +124,39 @@ class Profile
      *         "sports" = @Assert\Type(type="string"),
      *     },
      *     allowMissingFields = true
-	 * )
-	 * @Groups({"user"})
-	 */
-	protected $profileLikes = [
-		'music' => null,
-		'cinema' => null,
-		'books' => null,
-		'hobbies' => null,
-		'traveling' => null,
-		'television' => null,
-		'sports' => null,
-	];
-	
-	/**
-	 * @var array
+     * )
+     * @Groups({"user"})
+     */
+    protected $profileLikes = [
+        'music' => null,
+        'cinema' => null,
+        'books' => null,
+        'hobbies' => null,
+        'traveling' => null,
+        'television' => null,
+        'sports' => null,
+    ];
+    
+    /**
+     * @var array
      * @ORM\Column(type="array")
-	 * @Assert\Collection(
-     *     fields = {	 
+     * @Assert\Collection(
+     *     fields = {
      *         "proudest_of" = @Assert\Type(type="string"),
      *         "dream_life" = @Assert\Type(type="string"),
      *     },
      *     allowMissingFields = true
-	 * )
-	 * @Groups({"user"})
-	 */
-	protected $profileAnswers = [
-		'proudest_of' => null,
-		'dream_life' => null,		
-	];
-		
-	public function __construct()
+     * )
+     * @Groups({"user"})
+     */
+    protected $profileAnswers = [
+        'proudest_of' => null,
+        'dream_life' => null,
+    ];
+        
+    public function __construct()
     {
-        $this->id = Uuid::uuid4()->toString();             
+        $this->id = Uuid::uuid4()->toString();
     }
 
     public function getGenres()
@@ -173,7 +173,7 @@ class Profile
     {
         return [self::EYES_BLUE, self::EYES_BROWN, self::EYES_GRAY, self::EYES_GREEN];
     }
-	
+    
     /**
      * Get id
      * @return string
@@ -182,7 +182,7 @@ class Profile
     {
         return $this->id;
     }
-	
+    
     /**
      * Set user
      * @param User $user
@@ -202,61 +202,61 @@ class Profile
     {
         return $this->user;
     }
-	
-	/**
-	 * @param string $searchingGender
-	 * @return Profile
-	 */
+    
+    /**
+     * @param string $searchingGender
+     * @return Profile
+     */
     public function setSearchingGender(string $searchingGender)
-	{
-		$this->searchingGender = $searchingGender;
-		return $this;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getSearchingGender()
-	{
-		return $this->searchingGender;
-	}	
-	
-	/**
-	 * @param mixed $searchingAgeMin
-	 * @return Profile
-	 */
+    {
+        $this->searchingGender = $searchingGender;
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getSearchingGender()
+    {
+        return $this->searchingGender;
+    }
+    
+    /**
+     * @param mixed $searchingAgeMin
+     * @return Profile
+     */
     public function setSearchingAgeMin($searchingAgeMin)
-	{
-		$this->searchingAgeMin = $searchingAgeMin;
-		return $this;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getSearchingAgeMin()
-	{
-		return $this->searchingAgeMin;
-	}
-	
-	/**
-	 * @param mixed $searchingAgeMax
-	 * @return Profile
-	 */
+    {
+        $this->searchingAgeMin = $searchingAgeMin;
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getSearchingAgeMin()
+    {
+        return $this->searchingAgeMin;
+    }
+    
+    /**
+     * @param mixed $searchingAgeMax
+     * @return Profile
+     */
     public function setSearchingAgeMax($searchingAgeMax)
-	{
-		$this->searchingAgeMax = $searchingAgeMax;
-		return $this;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getSearchingAgeMax()
-	{
-		return $this->searchingAgeMax;
-	}	
-	
+    {
+        $this->searchingAgeMax = $searchingAgeMax;
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getSearchingAgeMax()
+    {
+        return $this->searchingAgeMax;
+    }
+    
     /**
      * Set birthdate
      * @param \DateTime $birthdate
@@ -276,85 +276,85 @@ class Profile
     {
         return $this->birthdate;
     }
-	
-	/**
-	 * @param mixed $weight
-	 * @return Profile
-	 */
+    
+    /**
+     * @param mixed $weight
+     * @return Profile
+     */
     public function setWeight($weight)
-	{
-		$this->weight = (int) $weight;
-		return $this;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getWeight()
-	{
-		return $this->weight;
-	}
-	
-	/**
-	 * @param mixed $size
-	 * @return Profile
-	 */
+    {
+        $this->weight = (int) $weight;
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+    
+    /**
+     * @param mixed $size
+     * @return Profile
+     */
     public function setSize($size)
-	{		
-		$this->size = (int) $size;
-		return $this;
-	}
-	
-	/**
-	 * @return int
-	 */
-	public function getSize()
-	{
-		return $this->size;
-	}
-	
-	/**
-	 * @param mixed $eyesColor
-	 * @return Profile
-	 */
+    {
+        $this->size = (int) $size;
+        return $this;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+    
+    /**
+     * @param mixed $eyesColor
+     * @return Profile
+     */
     public function setEyesColor($eyesColor)
-	{
-		if (is_string($eyesColor)) {			
-			$this->eyesColor = $eyesColor;
-		}
-		
-		return $this;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getEyesColor()
-	{
-		return $this->eyesColor;
-	}
-	
-	/**
-	 * @param mixed $hairColor
-	 * @return Profile
-	 */
-    public function setHairColor($hairColor)	
-	{
-		if (is_string($hairColor)) {			
-			$this->hairColor = $hairColor;
-		}
-		
-		return $this;
-	}
-	
-	/**
-	 * @return string
-	 */
-	public function getHairColor()
-	{
-		return $this->hairColor;
-	}	
-	
+    {
+        if (is_string($eyesColor)) {
+            $this->eyesColor = $eyesColor;
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getEyesColor()
+    {
+        return $this->eyesColor;
+    }
+    
+    /**
+     * @param mixed $hairColor
+     * @return Profile
+     */
+    public function setHairColor($hairColor)
+    {
+        if (is_string($hairColor)) {
+            $this->hairColor = $hairColor;
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getHairColor()
+    {
+        return $this->hairColor;
+    }
+    
     /**
      * @return string
      */
@@ -370,23 +370,23 @@ class Profile
     {
         $this->description = $description;
     }
-	
-	public function getProfileLikes()
-	{
-		return $this->profileLikes;
-	}
-	
-	public function setProfileLikes($profileLikes)
-    {		
+    
+    public function getProfileLikes()
+    {
+        return $this->profileLikes;
+    }
+    
+    public function setProfileLikes($profileLikes)
+    {
         $this->profileLikes = $profileLikes;
     }
-	
-	public function getProfileAnswers()
-	{
-		return $this->profileAnswers;
-	}
-	
-	public function setProfileAnswers($profileAnswers)
+    
+    public function getProfileAnswers()
+    {
+        return $this->profileAnswers;
+    }
+    
+    public function setProfileAnswers($profileAnswers)
     {
         $this->profileAnswers = $profileAnswers;
     }

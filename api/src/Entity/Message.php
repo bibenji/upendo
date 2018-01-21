@@ -11,59 +11,59 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource(attributes={
- * 		"normalization_context"={"groups"={"message"}}, 
- * 		"denormalization_context"={"groups"={"message"}} 
+ * 		"normalization_context"={"groups"={"message"}},
+ * 		"denormalization_context"={"groups"={"message"}}
  * })
  * @ORM\Entity()
  * @ORM\Table(name="message")
  */
 class Message
-{     
-	/**
-	 * @ORM\Column(name="id", type="string")
-	 * @ORM\Id()
-	 * @Groups({"conversation", "message"})
-	 */	 
+{
+    /**
+     * @ORM\Column(name="id", type="string")
+     * @ORM\Id()
+     * @Groups({"conversation", "message"})
+     */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-	 * @Groups({"conversation", "message"})
+     * @Groups({"conversation", "message"})
      */
-    protected $content;			
-	
-	/**
+    protected $content;
+    
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetimetz")
-	 * @Groups({"user", "conversation", "message"})
+     * @Groups({"user", "conversation", "message"})
      */
-    protected $messageDate;		
-	
+    protected $messageDate;
+    
     /**
      * @var User
      * @ORM\ManyToOne(targetEntity="User", inversedBy="messagesSent")
-	 * @Groups({"conversation", "message"})
+     * @Groups({"conversation", "message"})
      */
     protected $from;
-	
-	/**
+    
+    /**
      * @var Conversation
      * @ORM\ManyToOne(targetEntity="Conversation", inversedBy="messages")
-	 * @Groups({"message"})
+     * @Groups({"message"})
      */
-	protected $conversation;
-	
-	/**
-	 * @var array
+    protected $conversation;
+    
+    /**
+     * @var array
      * @ORM\Column(type="array")
-	 */
-	protected $seenBy;
+     */
+    protected $seenBy;
 
     public function __construct()
     {
         $this->id = Uuid::uuid4()->toString();
-		$this->messageDate = new \DateTime();
+        $this->messageDate = new \DateTime();
     }
 
     /**
@@ -89,8 +89,8 @@ class Message
     {
         $this->content = $content;
     }
-	
-	/**
+    
+    /**
      * Set messageDate
      * @param \DateTime $messageDate
      * @return Profile
@@ -125,8 +125,8 @@ class Message
     {
         $this->from = $from;
     }
-	
-	/**
+    
+    /**
      * @return Conversation
      */
     public function getConversation()

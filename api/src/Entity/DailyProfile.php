@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**  
+/**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="Upendo\Repository\DailyProfileRepository")
  * @ORM\Table(name="daily_profile")
@@ -23,27 +23,27 @@ class DailyProfile
      * @Groups({"daily_profile"})
      */
     protected $id;
-	
-	/**
+    
+    /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="dailyProfileAsOne")
-	 * @ORM\JoinColumn(name="user_one_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_one_id", referencedColumnName="id")
      * @Groups({"daily_profile"})
      */
     protected $userOne;
-	
+    
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="dailyProfileAsTwo")
-	 * @ORM\JoinColumn(name="user_two_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_two_id", referencedColumnName="id")
      * @Groups({"daily_profile"})
      */
     protected $userTwo;
-	
-	/**
-	 * @var \DateTime
+    
+    /**
+     * @var \DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"daily_profile"})
-	 */
-	protected $date;
+     */
+    protected $date;
 
     public function __construct()
     {
@@ -60,40 +60,40 @@ class DailyProfile
         return $this->id;
     }
 
-	/**
+    /**
      * @return User
      */
     public function getUserOne()
-    {		
+    {
         return $this->userOne;
     }
 
     /**
      * @param User $userOne
-	 * @return DailyProfile
+     * @return DailyProfile
      */
     public function setUserOne(User $userOne)
     {
         $this->userOne = $userOne;
-		return $this;
+        return $this;
     }
-	
+    
     /**
      * @return User
      */
     public function getUserTwo()
-    {		
+    {
         return $this->userTwo;
     }
 
     /**
      * @param User $userTwo
-	 * @return DailyProfile
+     * @return DailyProfile
      */
     public function setUserTwo(User $userTwo)
     {
         $this->userTwo = $userTwo;
-		return $this;
+        return $this;
     }
 
     /**
