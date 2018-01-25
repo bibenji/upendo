@@ -149,6 +149,13 @@ class User implements UserInterface
 	 * @Groups({"user"})
 	 */
 	protected $region;
+
+    /**
+     * @var null|string
+     * @ORM\Column(type="string", nullable=true)
+     * @Groups({"user"})
+     */
+	protected $city;
 	
 	/**
 	 * @var Conversation
@@ -423,6 +430,22 @@ class User implements UserInterface
     public function setRegion($region)
     {
         $this->region = $region;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
     }
 
     /**

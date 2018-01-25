@@ -3,6 +3,7 @@ import Reflux from 'reflux';
 import Store from '../../tools/store/store';
 
 import CustomAxios from '../../tools/connectivity/api';
+import axios from 'axios';
 
 import GenericInput from '../generic/genericInput';
 
@@ -10,6 +11,8 @@ export default class Settings extends Reflux.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			regions: [],
+			cities: [],
 			userData: null
 		};
 		this.store = Store;
@@ -17,6 +20,7 @@ export default class Settings extends Reflux.Component {
 	
 	componentDidMount() {		
 		this.getUser();
+		this.getRegions();
 	}
 	
 	getUser() {		
@@ -27,9 +31,62 @@ export default class Settings extends Reflux.Component {
 			if (response.status === 200) {				
 				that.setState({
 					userData: response.data					
-				})
+				});
 			}
 		});		
+	}
+
+	getRegions() {
+		const that = this;
+
+		axios.get('https://geo.api.gouv.fr/regions')
+			.then(function(response) {
+				if(response.status === 200) {
+					let optionsRegions = [];
+					response.data.forEach((region, index) => {
+						optionsRegions.push({
+							value: region.code,
+							displayValue: region.nom
+						});
+                    });
+					optionsRegions.sort(function(a, b) {
+						if (a.displayValue > b.displayValue) {
+							return true;
+						}
+					});
+					that.setState({
+						regions: optionsRegions
+					});
+				}
+			});
+
+	}
+
+	onRegionChange(event) {
+        const that = this;
+
+        axios.get('https://geo.api.gouv.fr/communes?codeRegion='+event.target.value)
+            .then(function(response) {
+                if(response.status === 200) {
+                    let optionsCities = [];
+                    response.data.forEach((city, index) => {
+                        optionsCities.push({
+                            value: city.code,
+                            displayValue: city.nom
+                        });
+                    });
+                    optionsCities.sort(function(a, b) {
+                        if (a.displayValue > b.displayValue) {
+                            return true;
+                        }
+                    });
+                    that.setState({
+                        cities: optionsCities
+                    });
+                }
+            });
+
+		this.updateField(event);
 	}
 	
 	updateField(event) {		
@@ -75,6 +132,15 @@ export default class Settings extends Reflux.Component {
 						<GenericInput name="profile.searchingAgeMax" value={criteria.searchingAgeMax} onChange={this.updateField.bind(this)} />
 						<input className="btn btn-primary float-right" type="submit" />
 						<div className="clearfix"></div>
+						<hr />
+						<h4>Area</h4>
+                        <GenericInput name="profile.region" type="select" options={this.state.regions} value={generals.region} onChange={this.onRegionChange.bind(this)} />
+                        <GenericInput name="profile.city" type="select" options={this.state.cities} value={generals.city} onChange={this.updateField.bind(this)} />
+                        <GenericInput name="profile.searchingZone" type="select" options={[
+                            {value: "same_region", displayValue: "Display people in the same region of me"},
+                            {value: "same_city", displayValue: "Display people in the same city of me"},
+                            {value: "everywhere", displayValue: "Display people form everywhere"}
+                        ]} value={criteria.searchingArea} onChange={this.updateField.bind(this)} />
 						<hr />
 						<h4>General</h4>
 						<GenericInput name="username" value={generals.username} onChange={this.updateField.bind(this)} />

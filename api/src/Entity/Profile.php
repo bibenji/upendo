@@ -15,6 +15,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Profile
 {
+    const SEARCHING_AREA_REGION = 'same_region';
+    const SEARCHING_AREA_CITY = 'same_city';
+    const SEARCHING_AREA_EVERYWHERE = 'everywhere';
+
 	const SEARCHING_MEN = 'M';
 	const SEARCHING_WOMEN = 'W';
 	const SEARCHING_BOTH = 'B';
@@ -29,7 +33,7 @@ class Profile
 	const HAIR_BLOND = 'blond';
 	const HAIR_AUBURN = 'auburn';
 	const HAIR_RED = 'red';
-	
+
     /**
      * @var string
      * @ORM\Column(type="string")
@@ -50,6 +54,13 @@ class Profile
 	 * @Groups({"user"})
      */
 	protected $birthdate;
+
+    /**
+     * @var null|string
+     * @ORM\Column(type="string", nullable=true)
+     * @Groups({"user"})
+     */
+	protected $searchingArea;
 		
 	/**
      * @var string
@@ -202,11 +213,29 @@ class Profile
     {
         return $this->user;
     }
-	
-	/**
-	 * @param string $searchingGender
-	 * @return Profile
-	 */
+
+    /**
+     * @return null|string
+     */
+    public function getSearchingArea()
+    {
+        return $this->searchingArea;
+    }
+
+    /**
+     * @param string $searchingArea
+     * @return $this
+     */
+    public function setSearchingArea(string $searchingArea)
+    {
+        $this->searchingArea = $searchingArea;
+        return $this;
+    }
+
+    /**
+     * @param string $searchingGender
+     * @return $this
+     */
     public function setSearchingGender(string $searchingGender)
 	{
 		$this->searchingGender = $searchingGender;
