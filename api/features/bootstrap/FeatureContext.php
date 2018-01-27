@@ -37,7 +37,7 @@ class FeatureContext implements Context, SnippetAcceptingContext
      * You can also pass arbitrary arguments to the
      * context constructor through behat.yml.
      */
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(\Symfony\Component\DependencyInjection\Container $container, ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
         $this->manager = $doctrine->getManager();
