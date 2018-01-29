@@ -61,6 +61,7 @@ services:
         image: postgres:9.6
         env_file: ["api/docker/.env.dev", ".env"]
         volumes:
+            - ./:/opt/project/
             - ./docker/database/:/var/lib/postgresql/data/
         labels:
             - "traefik.enable=false"

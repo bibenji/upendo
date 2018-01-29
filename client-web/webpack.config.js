@@ -2,6 +2,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var loaders = require('./webpack.loaders');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var DashboardPlugin = require('webpack-dashboard/plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -47,9 +48,11 @@ module.exports = {
     port: PORT,
     host: HOST,
     https: false,
-    public: "upendo.localhost"
+    public: "upendo.localhost",
+    // disableHostCheck: false
   },
   plugins: [
+    new CopyWebpackPlugin([ { from: 'src/assets', to: 'assets' } ]),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin({

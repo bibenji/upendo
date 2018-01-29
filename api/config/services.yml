@@ -39,4 +39,8 @@ services:
         arguments: [ '@security.token_storage', '@request_stack', "%profiles_uploads_short_path%" ]
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    app.repository.geoloc:
+        class: Upendo\Repository\GeolocRepository.php
+        arguments: [ '@database_connection' ]
     

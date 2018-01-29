@@ -9,7 +9,7 @@ let CustomAxios = axios.create({
 CustomAxios.interceptors.response.use(function (response) {
   return response;
 }, function(error) {
-  window.location.replace("/error");
+  // window.location.replace("/error");
 });
 
 export default CustomAxios;

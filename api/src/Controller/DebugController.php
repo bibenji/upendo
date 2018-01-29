@@ -16,6 +16,9 @@ class DebugController extends Controller
 {
     public function debugAction()
     {
+        $geolocRepository = $this->get('app.repository.geoloc');
+
+        dump(get_class($geolocRepository));
         dump('coucou les genoux !'); exit;
     }
 }

@@ -120,7 +120,7 @@ export default class Settings extends Reflux.Component {
 		if (this.state.userData) {
 			const generals = this.state.userData;
 			const criteria = this.state.userData.profile;
-			
+
 			return (
 				<div>
 					<h2>Settings</h2>					
@@ -135,12 +135,12 @@ export default class Settings extends Reflux.Component {
 						<hr />
 						<h4>Area</h4>
                         <GenericInput name="profile.region" type="select" options={this.state.regions} value={generals.region} onChange={this.onRegionChange.bind(this)} />
-                        <GenericInput name="profile.city" type="select" options={this.state.cities} value={generals.city} onChange={this.updateField.bind(this)} />
-                        <GenericInput name="profile.searchingZone" type="select" options={[
+						<GenericInput name="profile.city" type="select" options={this.state.cities} value={generals.city} onChange={this.updateField.bind(this)} />
+						<GenericInput name="profile.searchingZone" type="select" options={[
                             {value: "same_region", displayValue: "Display people in the same region of me"},
                             {value: "same_city", displayValue: "Display people in the same city of me"},
                             {value: "everywhere", displayValue: "Display people form everywhere"}
-                        ]} value={criteria.searchingArea} onChange={this.updateField.bind(this)} />
+                        ]} value={criteria.searchingArea ? criteria.searchingArea : 'everywhere'} onChange={this.updateField.bind(this)} />
 						<hr />
 						<h4>General</h4>
 						<GenericInput name="username" value={generals.username} onChange={this.updateField.bind(this)} />
