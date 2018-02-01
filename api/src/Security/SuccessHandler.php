@@ -28,7 +28,9 @@ class SuccessHandler implements AuthenticationSuccessHandlerInterface
     /**
      * @param Request $request
      * @param TokenInterface $token
-     * @return JsonResponse
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
@@ -43,6 +45,7 @@ class SuccessHandler implements AuthenticationSuccessHandlerInterface
             'apikey' => $apikey,
             'id' => $user->getId()
         ));
+
         return $response;
     }
 }

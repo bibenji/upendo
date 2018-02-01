@@ -12,8 +12,8 @@ default:
         - Behatch\Context\RestContext
         - Behatch\Context\JsonContext
 #        - Fidry\AliceBundleExtension\Context\Doctrine\AliceORMContext
-        - Fidry\AliceBundleExtension\Context\Doctrine\AliceORMContext:
-            basePath: %paths.base%/features/fixtures
+#        - Fidry\AliceBundleExtension\Context\Doctrine\AliceORMContext:
+#            basePath: %paths.base%/features/fixtures
 #        - Fidry\AliceBundleExtension\Context\Doctrine\AliceORMContext
   extensions:
     Behat\Symfony2Extension:
@@ -28,5 +28,5 @@ default:
         default:
           goutte: ~
     Behatch\Extension: ~
-    Fidry\AliceBundleExtension\Extension:
-        fixtures_base_path: ~
+#    Fidry\AliceBundleExtension\Extension:
+#        fixtures_base_path: ~
