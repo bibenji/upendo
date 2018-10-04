@@ -4,18 +4,29 @@ default:
   suites:
     default:
       contexts:
-        - FeatureContext: { doctrine: "@doctrine" }
+#        - FeatureContext: { container: "@service_container"}
+        - FeatureContext:
+            container: '@service_container'
+            doctrine: "@doctrine"
         - Behat\MinkExtension\Context\MinkContext
         - Behatch\Context\RestContext
         - Behatch\Context\JsonContext
+#        - Fidry\AliceBundleExtension\Context\Doctrine\AliceORMContext
+#        - Fidry\AliceBundleExtension\Context\Doctrine\AliceORMContext:
+#            basePath: %paths.base%/features/fixtures
+#        - Fidry\AliceBundleExtension\Context\Doctrine\AliceORMContext
   extensions:
     Behat\Symfony2Extension:
       kernel:
-        env: "test"
-        debug: "true"
+#        env: "test"
+#        debug: "true"
+        class: Upendo\Kernel
+#        bootstrap: api/features/bootstrap/FeatureContext.php
     Behat\MinkExtension:
-      base_url: "http://example.com/"
+      base_url: "http://nginx"
       sessions:
         default:
-          symfony2: ~
+          goutte: ~
     Behatch\Extension: ~
+#    Fidry\AliceBundleExtension\Extension:
+#        fixtures_base_path: ~
